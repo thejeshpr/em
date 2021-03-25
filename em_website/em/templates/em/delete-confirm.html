@@ -1,0 +1,24 @@
+
+{% extends 'em/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div>
+    <div class="card">
+        <div class="card-header">
+            <h3>Delete item {{ object }} ?</h3>
+        </div>
+        <div class="card-body em-text">
+            <div class="justify-content-center">
+                <form method="post">{% csrf_token %} 
+                    <p>Are you sure you want to delete "{{ object }}"?</p>                     
+                    <button type="submit" class="btn btn-danger"><i class="las la-check"></i> Yes</button>
+                    <a class="btn btn-primary" href="{% url 'em:home' %}"><i class="las la-times"></i> No</a>
+                </form>             
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

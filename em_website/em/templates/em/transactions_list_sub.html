@@ -1,0 +1,39 @@
+{% load humanize %}
+
+<table class="table table-hover">                
+    <tr>                    
+      <th><i class="las la-question-circle"></i> Reason</th>
+      <th style="text-align: right;"><i class="las la-rupee-sign"></i> Amount</th>                    
+    </tr>
+    </thead>
+    <tbody>
+      {% for transaction in transactions %}
+      <tr>                       
+        <td>
+          <a href="{% url 'em:transaction-detail' pk=transaction.pk %}">
+            <strong class="desc-in-table">#{{ transaction.id }} {{ transaction.title }}</strong>
+          </a>
+        <br/>
+        <a href="{% url 'em:category-detail' pk=transaction.category.pk %}">
+            <span class="secondary" style="color:gray;"><i class="{{ transaction.category.icon }}"></i> {{ transaction.category }}</span><br/>
+        </a>
+        <span class="secondary" style="color:gray;"><i class="las la-calendar"></i> {{ transaction.date }}</span>        
+        </td>         
+
+        {% if transaction.tran_type == 'EX' %}
+          <td style="text-align: right;">
+              <span class="amount-in-table" style="color: red;">-<i class="las la-rupee-sign"></i>{{ transaction.amount|intcomma }}</span>                            
+          </td>
+        {% elif transaction.tran_type == 'IN' %}
+          <td class="amount-in-table float-right" style="color: green;">+<i class="las la-rupee-sign"></i>{{ transaction.amount|intcomma }}</td>                      
+        {% endif %}
+        
+      </tr>
+      {% empty %}
+          <tr>
+            <td colspan=2 style="text-align: center;">No Transactions <h1><i class="las la-grin-beam"></i></h1></td>
+          </tr>
+      {% endfor %} 
+
+    </tbody>
+</table>

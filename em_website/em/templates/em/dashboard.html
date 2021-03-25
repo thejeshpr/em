@@ -1,0 +1,121 @@
+{% extends "em/base.html" %}
+
+{% load humanize %}
+
+
+{% block content %}
+<style>
+    .metric-card{
+        background-color: #0D47A1;
+        color: white;   
+        border-radius: 7px;
+        align-content: center;
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+</style>
+
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+              <h3 style="display: inline-block;"><i class="las la-chart-pie"></i> Spendings
+                {% if total_expense %}
+                  <span class="amount-in-table" style="color: red; font-size: 20px;">-<i class="las la-rupee-sign"></i>{{ total_expense|intcomma }}</span>
+                {% else %}
+                <span class="amount-in-table"><i class="las la-rupee-sign"></i>0</span>
+                {% endif %}
+              </h3>  
+            </div>
+            <div class="card-body em-text">
+                <span><strong>Transactions of</strong>: <span class="badge badge-secondary" style="font-size: 17px;">{{ selected_range  }}</span></span><br/>                                
+                <hr/>
+                {% for entry in spendings %}
+                  <div class="mt-2">
+                    <a style="color: black;" href="{% url 'em:category-detail' pk=entry.category.pk %}">
+                      <i class="{{ entry.category.icon }}"></i> {{ entry.category.name }}:
+                    </a>
+                    {{ entry.percentage }}%(<i class="las la-rupee-sign"></i><span class="amount-in-table" style="font-size: 15px;">{{ entry.total_amt }}</span>)</span>                    
+                    <div class="progress mt-1" style="height: 4px;">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ entry.percentage }}%" aria-valuenow="{{ entry.percentage }}" aria-valuemin="0" aria-valuemax="100" ></div>                        
+                    </div>                                        
+                  </div>
+
+                {% empty %}
+                  <div style="text-align: center;">
+                    No Transactions
+                  </div>
+                {% endfor %}
+
+            </div>
+            <div class="card-footer">
+                <div>                
+                    <a href="{% url 'em:home' %}?delta={{ delta| add:1 }}&ref_dt={{ ref_dt }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-left"></i></a>  
+                    <a href="{% url 'em:home' %}?delta={{ delta | add:-1 }}&ref_dt={{ ref_dt }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-right"></i></a>              
+                    <a href="{% url 'em:home' %}?last_n_days=7" class="btn btn-dark btn-sm"><i class="las la-calendar-week"></i> 7d</a>              
+                    <a href="{% url 'em:home' %}?last_n_days=30" class="btn btn-dark btn-sm"><i class="las la-calendar-alt"></i> 30d</a>              
+
+                    <a class="btn btn-sm btn-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="las la-filter"></i></a>
+
+                      <div class="collapse mt-2 mb-2" id="collapseExample">
+                        <div class="card card-body"> 
+
+                            <form class="form-inline" action="{% url 'em:home' %}" method="get" >
+                                <label class="sr-only" for="ref_dt">From</label>
+                                <input type="date" class="form-control mb-2 mr-sm-2" id="ref_dt" name="ref_dt">                                
+                                <button type="submit" class="btn btn-primary mb-2 btn-sm"><i class="las la-filter"></i> Filter</button>                                
+                            </form>
+
+                            <hr/>
+                            <form class="form-inline" action="{% url 'em:home' %}" method="get" >
+                              <label class="sr-only" for="fromDate">From</label>
+                              <input type="date" class="form-control mb-2 mr-sm-2" id="fromDate" name="fromDate">
+                              <label class="sr-only" for="toDate">To</label>
+                              <input type="date" class="form-control mb-2 mr-sm-2" id="toDate" name="toDate">
+                              <button type="submit" class="btn btn-primary mb-2 btn-sm"><i class="las la-filter"></i> Filter</button>                                
+                          </form>
+                            
+
+                        </div>
+                      </div>
+                </div>
+              </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row mt-2">
+  <div class="col-md-12">
+
+      <div class="card">  
+          <div class="card-header">
+            <h3 style="display: inline-block;"><i class="las la-file-invoice-dollar"></i> Transactions</h3>
+            <a href="{% url 'em:transaction-add' %}" class="btn btn-sm btn-success float-right mt-1"><i class="las la-plus"></i> Transaction</a>                                    
+          </div>        
+        <div class="card-body">
+            <div>
+              
+              {% include "em/transactions_list_sub.html" %}
+
+            </div>
+        </div>
+      </div>
+    
+
+  </div>
+</div>
+
+<hr/>
+
+
+
+   
+
+
+    
+{% endblock %}

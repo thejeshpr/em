@@ -1,0 +1,32 @@
+{% extends 'em/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div>
+    <div class="card">
+        <div class="card-header">
+            <h3>Create New Transaction</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="reset" class="btn btn-warning">Reset</button>
+
+                <script>
+                    $(function () {                        
+                      $("#id_date").datepicker({
+                        format:'yyyy-mm-dd'
+                        // startDate: Date(),
+                      });
+                    });
+                </script>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

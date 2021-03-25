@@ -1,0 +1,31 @@
+{% extends 'em/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div>
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                <i class="{{ transaction.category.icon }}"></i> {{ transaction.title }}
+                <span class="amount-in-table">
+                    <i class="las la-rupee-sign"></i>{{ transaction.amount }}
+                </span>
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="em-text">
+                <span><strong>Name</strong>: {{ transaction.title }}</span><br/>
+                <span><strong>Amount</strong>: {{ transaction.amount }}</span><br/>
+                <span><strong>Date</strong>: {{ transaction.date|date:'d M, Y' }}</span><br/>
+                <span><strong>Catgeory</strong>: <a href="{% url 'em:category-detail' pk=transaction.category.pk %}">{{ transaction.category }}</a></span><br/>
+                <span><strong>Note</strong>: {{ transaction.desc }}</span>
+            </div>            
+            <hr/>
+            <a href="{% url 'em:transaction-update' pk=transaction.pk %}" class="btn btn-sm btn-primary">Edit</a>
+            <a href="{% url 'em:transaction-delete' pk=transaction.pk %}" class="btn btn-sm btn-danger">Delete</a>            
+        </div>
+    </div>
+</div>
+{% endblock %}
+

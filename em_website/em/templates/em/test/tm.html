@@ -1,0 +1,556 @@
+
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.6">
+    <title>Sticky Footer Navbar Template · Bootstrap</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.4/examples/sticky-footer-navbar/">
+
+    <!-- Bootstrap core CSS -->
+<link href="https://getbootstrap.com/docs/4.4/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Favicons -->
+<link rel="apple-touch-icon" href="/docs/4.4/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/docs/4.4/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="manifest" href="/docs/4.4/assets/img/favicons/manifest.json">
+<link rel="mask-icon" href="/docs/4.4/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+<link rel="icon" href="/docs/4.4/assets/img/favicons/favicon.ico">
+<script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
+<script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+<meta name="msapplication-config" content="/docs/4.4/assets/img/favicons/browserconfig.xml">
+<link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&family=Titillium+Web:wght@600&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#563d7c">
+
+
+    <style>
+
+        body{
+            background-color: #F2F2F2;
+        }
+
+        canvas {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+        }
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .c-card{
+          /* text-align: center; */
+          border-left-width: 8px;
+          border-top-left-radius: 5px;
+      }
+
+      .c-card-debit{                    
+          border-left-color: #E53935;          
+      }
+
+      .c-card-credit{                    
+          border-left-color: #00796B;          
+      }
+
+      .c-card-pending{                    
+          border-left-color: #000080;        
+      }
+
+      .c-card-emi{                    
+          border-left-color: #000000;          
+      }
+
+      .c-card-amt{
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 45px;
+      }
+
+      .c-card-summary{
+          font-size: 15px;
+      }
+
+      .c-color-debit{
+          color: #E53935;
+      }
+
+      .c-color-credit{
+          color: #00796B;
+      }
+
+      .c-color-pending{
+          color: #000080;
+      }
+
+      .c-color-emi{
+          color: #000000;
+      }
+
+      .c-table-amt{
+        font-family: 'Roboto Mono', monospace;
+        font-size: 25px;
+      }
+
+      .c-table-desc{
+        /* font-family: 'Roboto Mono', monospace;               */
+        font-family: 'Roboto Mono', monospace;
+      }
+
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="https://getbootstrap.com/docs/4.4/examples/sticky-footer-navbar/sticky-footer-navbar.css" rel="stylesheet">
+  </head>
+  <body class="d-flex flex-column h-100">
+    <header>
+  <!-- Fixed navbar -->
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#">Fixed navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <form class="form-inline mt-2 mt-md-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+</header>
+
+<!-- Begin page content -->
+<main role="main" class="flex-shrink-0">
+  <div class="container">
+    <br/>
+    <div class="card-deck">
+        
+        <div class="card c-card c-card-credit">
+            <div class="card-body">
+              <h3 class="card-title c-card-amt c-color-credit">14,000</h3>
+              <p class="card-text"><small class="text-muted">6 Credits</small></p>
+            </div>
+          </div>
+
+        <div class="card c-card c-card-debit">
+            <div class="card-body">
+              <h3 class="card-title c-card-amt c-color-debit">25,000</h3>
+              <p class="card-text"><small class="text-muted">30 Debits</small></p>
+            </div>
+          </div>
+
+          <div class="card c-card c-card-pending">
+            <div class="card-body">
+              <h3 class="card-title c-card-amt c-color-pending">8</h3>
+              <p class="card-text"><small class="text-muted">Pending</small></p>
+            </div>
+          </div>
+          
+          <div class="card c-card c-card-emi">
+            <div class="card-body">
+              <h3 class="card-title c-card-amt c-color-emi">8</h3>
+              <p class="card-text"><small class="text-muted">Pending</small></p>
+            </div>
+          </div>
+      </div>
+
+  </div>
+</main>
+
+<div class="container mt-2">
+
+    <div class="row">
+
+        <div class="col-md-6 mt-2">
+            <div class="card">                
+                <div class="card-body">
+                    <canvas id="canvas" width="400" height="350"></canvas>
+                </div>
+                <script>
+                    var ctx = document.getElementById('canvas').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: [12, 19, 3, 5, 2, 3],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                </script>
+            </div>
+        </div>
+
+        <div class="col-md-6 mt-2">
+            <div class="card">
+                <img class="card-img-top" src="holder.js/100x180/" alt="">
+                <div class="card-body">
+                    <canvas id="canvas2" width="400" height="350"></canvas>
+                    <script>
+                        var ctx = document.getElementById('canvas2').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                datasets: [{
+                                    label: '# of Votes',
+                                    data: [12, 19, 3, 5, 2, 3],
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            // options: {
+                            //     scales: {
+                            //         yAxes: [{
+                            //             ticks: {
+                            //                 beginAtZero: true
+                            //             }
+                            //         }]
+                            //     }
+                            // }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row mt-2">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <form class="form-inline">
+                        <label class="sr-only" for="inlineFormInputName2">Name</label>
+                        <input type="text" class="form-control form-control-lg   mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Jane Doe" style="width: 90%;">
+                        <button type="submit" class="btn btn-primary btn-lg mb-2">Submit</button>
+                      </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 mt-2">
+            <div class="card">                
+                <div class="card-body">
+                    <table class="table table-hover">                
+                        <tr>
+                          <!-- <th>Category</th> -->
+                          <th class="c-table-desc">Description</th>
+                          <th class="c-table-desc" align="right">Amount</th>                    
+                        </tr>
+                        </thead>
+                        <tbody>
+                          
+                          <tr>                      
+                            <td>                                
+                              <strong class="c-table-desc">spent on fish</strong>
+                              <br/>
+                              <span class="secondary">Food</span>
+                            </td>
+                            <!-- <td>Food</td> -->
+                            
+                              <td class="c-table-amt" align="right" style="color: red;">-600.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">15/04/2020 spent on fish</strong>
+                              <br/>
+                              <span class="secondary">Food</span>
+                            </td>
+                            <!-- <td>Food</td> -->
+                            
+                              <td class="amount-in-table" align="right" style="color: red;">-600.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">sent 15rs simply to her</strong>
+                              <br/>
+                              <span class="secondary">personal</span>
+                            </td>
+                            <!-- <td>personal</td> -->
+                            
+                              <td class="amount-in-table" align="right" style="color: red;">-15.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">given 4k for grocories in Nagamangala</strong>
+                              <br/>
+                              <span class="secondary">groceries</span>
+                            </td>
+                            <!-- <td>groceries</td> -->
+                            
+                              <td class="amount-in-table" align="right" style="color: red;">-4000.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">Has to pay remaining amount to Ranju</strong>
+                              <br/>
+                              <span class="secondary">OutGoing</span>
+                            </td>
+                            <!-- <td>OutGoing</td> -->
+                            
+                            <td class="amount-in-table" align="right">8500.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">spent on fuel</strong>
+                              <br/>
+                              <span class="secondary">travel</span>
+                            </td>
+                            <!-- <td>travel</td> -->
+                            
+                              <td class="amount-in-table" align="right" style="color: red;">-1830.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">Recharge for JIO hotspot</strong>
+                              <br/>
+                              <span class="secondary">Recharge</span>
+                            </td>
+                            <!-- <td>Recharge</td> -->
+                            
+                              <td class="amount-in-table" align="right" style="color: red;">-255.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">spent</strong>
+                              <br/>
+                              <span class="secondary">travel</span>
+                            </td>
+                            <!-- <td>travel</td> -->
+                            
+                              <td class="amount-in-table" align="right" style="color: red;">-1830.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">spent on hotel food</strong>
+                              <br/>
+                              <span class="secondary">Food</span>
+                            </td>
+                            <!-- <td>Food</td> -->
+                            
+                              <td class="amount-in-table" align="right" style="color: red;">-500.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">Papa withdrawn 5k from DBS</strong>
+                              <br/>
+                              <span class="secondary">RameshPR</span>
+                            </td>
+                            <!-- <td>RameshPR</td> -->
+                            
+                              <td class="amount-in-table" align="right" style="color: red;">-5000.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">rachana gave 5000 rs and pending is 11000</strong>
+                              <br/>
+                              <span class="secondary">Incoming</span>
+                            </td>
+                            <!-- <td>Incoming</td> -->
+                            
+                              <td class="amount-in-table" style="color: green;" align="right">+5000.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">10k given to rachana</strong>
+                              <br/>
+                              <span class="secondary">LoanGiven</span>
+                            </td>
+                            <!-- <td>LoanGiven</td> -->
+                            
+                            <td class="amount-in-table" align="right">10000.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">spent on fuel</strong>
+                              <br/>
+                              <span class="secondary">travel</span>
+                            </td>
+                            <!-- <td>travel</td> -->
+                            
+                              <td class="amount-in-table" align="right" style="color: red;">-1830.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">Mutton and fork</strong>
+                              <br/>
+                              <span class="secondary">Food</span>
+                            </td>
+                            <!-- <td>Food</td> -->
+                            
+                            <td class="amount-in-table" align="right">2500.0</td>
+                            
+                          </tr>
+                          
+                          <tr>                      
+                            <td>
+                              <strong class="desc-in-table">Tractor + Scooter petrol in Nagamangala from kotak cerdit card</strong>
+                              <br/>
+                              <span class="secondary">Food</span>
+                            </td>
+                            <!-- <td>Food</td> -->
+                            
+                            <td class="amount-in-table" align="right">1830.0</td>
+                            
+                          </tr>
+                                              
+                        </tbody>
+                    </table>  
+                </div>
+            </div>            
+
+        </div>
+
+        <div class="col-md-4 mt-2">
+
+          <div class="row">
+
+            <div class="col-md-12">
+              
+              <div class="card">                
+                <div class="card-body">
+                    <h4 class="card-title">Title</h4>
+                    <p class="card-text">Text</p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          
+          <div class="row mt-2">
+
+            <div class="col-md-12">
+              
+              <div class="card">                
+                <div class="card-body">
+                    <h4 class="card-title">Title</h4>
+                    <p class="card-text">Text</p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+            
+
+
+        </div>
+
+        
+
+    </div>
+
+</div>
+
+<footer class="footer mt-auto py-3">
+  <div class="container">
+    <span class="text-muted">Place sticky footer content here.</span>
+  </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+      <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.4/dist/js/bootstrap.bundle.min.js"><\/script>')</script><script src="/docs/4.4/dist/js/bootstrap.bundle.min.js" integrity="sha384-6khuMg9gaYr5AxOqhkVIODVIvm9ynTT5J4V1cfthmT+emCG6yVmEZsRHdxlotUnm" crossorigin="anonymous"></script></body>
+
+</html>

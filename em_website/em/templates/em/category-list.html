@@ -1,0 +1,64 @@
+{% extends 'em/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div>
+
+    <div class="card mt-2">
+        <div class="card-header">
+            <div class="float-left"><h3><i class="{{ category.icon }}"></i> Categories</h3></div>                        
+        </div>
+        <div class="card-body">
+            
+            <table class="table table-responsive">
+                <thead>
+                  <tr>                    
+                    <th scope="col">Name</th>                    
+                    <th scope="col">Total Amount</th>                               
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for entry in categories %}
+                    <tr>                        
+                        <th scope="row">
+                            <a href="{% url 'em:category-detail' pk=entry.category.pk %}">
+                                #{{ entry.category.pk }} - <i class="{{ entry.category.icon }}"></i>{{ entry.category.name }} ({{ entry.category.transactions.count }})
+                            </a>
+                        </th>                        
+                        <td>
+                            {{ entry.total_amt }} ({{ entry.percentage_share }})%
+                            <div class="progress" style="height: 4px;">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ entry.percentage_share }}%" aria-valuenow="{{ entry.percentage_share }}" aria-valuemin="0" aria-valuemax="100" ></div>
+                            </div>                    
+                        </td>
+                    </tr>     
+                    {% endfor %}                               
+                </tbody>
+              </table>
+                       
+        </div>        
+    </div>
+
+    {% for entry in categories %}
+    <div class="card mt-2">
+        <div class="card-body">
+            <a href="{% url 'em:category-detail' pk=entry.category.pk %}">
+                <strong><i class="{{ entry.category.icon }}"></i> {{ entry.category.name }}</strong><br/>
+            </a>
+            <div class="progress" style="height: 4px;">
+                <div class="progress-bar bg-info" role="progressbar" style="width: {{ entry.percentage_share }}%" aria-valuenow="{{ entry.percentage_share }}" aria-valuemin="0" aria-valuemax="100" ></div>
+            </div>                    
+            <secondary>Transactions</secondary>: {{ entry.category.transactions.count }}<br/>
+            <secondary>Overall Expenses</secondary>: {{ entry.total_amt }}<br/>
+            <secondary>Percentage Share</secondary>: {{ entry.percentage_share }}%<br/>            
+            
+            <a class="btn btn-sm btn-danger float-right" href="{% url 'em:category-delete' pk=entry.category.pk %}"><i class="las la-trash"></i></a>
+            <a class="btn btn-sm btn-primary float-right mr-1" href="{% url 'em:category-update' pk=entry.category.pk %}"><i class="las la-edit"></i></a>
+            
+        </div>
+    </div>    
+    {% endfor %}    
+</div>
+{% endblock %}
+

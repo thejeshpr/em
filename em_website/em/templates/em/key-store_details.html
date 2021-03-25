@@ -1,0 +1,25 @@
+{% extends 'em/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div>
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                <i class="{{ transaction.category.icon }}"></i> {{ keystore.key }}: {{ keystore.value }}
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="em-text">
+                <span><strong>Key</strong>: {{ keystore.key }}</span><br/>
+                <span><strong>Value</strong>: {{ keystore.value }}</span><br/>                
+            </div>            
+            <hr/> 
+            <a href="{% url 'em:keystore-update' pk=keystore.pk %}" class="btn btn-sm btn-primary">Edit</a>
+            <a href="{% url 'em:keystore-delete' pk=keystore.pk %}" class="btn btn-sm btn-danger">Delete</a>                       
+        </div>
+    </div>
+</div>
+{% endblock %}
+
