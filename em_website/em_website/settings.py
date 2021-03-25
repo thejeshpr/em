@@ -26,7 +26,7 @@ SECRET_KEY = 's&(=j^mm8psan9mb-7l$3c5=o7lw-b_5#nig%cackdhdugy)d^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.102', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['my-transaction.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -132,3 +132,9 @@ LOGIN_REDIRECT_URL = 'em:home'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
+
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
