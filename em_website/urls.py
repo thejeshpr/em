@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views
+from rest_framework import routers
+
+from em import views_api
+
+router = routers.DefaultRouter()
+router.register('category', views_api.CategoryViewSet)
+router.register('transaction', views_api.TransactionViewSet)
 
 
 urlpatterns = [
@@ -23,4 +30,8 @@ urlpatterns = [
     path('logout/', views.LogoutView.as_view(), {'template_name': 'registration/logged_out.html'},  name='logout'),
     path('admin/', admin.site.urls),
     path('', include('em.urls')),
+    path('api/', include(router.urls)),
+
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+
 ]

@@ -1,0 +1,76 @@
+{% extends 'em/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% load humanize %}
+
+{% block content %}
+<div>
+
+    <div class="card mt-2 em-text">
+
+        <div class="card-header">
+            <div class="float-left"><h3><i class="las la-chart-bar"></i> Overall Spendings</h3></div>                        
+        </div>
+
+        <div class="card-body">
+            <table class="table table-responsive">
+                <tbody>
+                    <tr>
+                        <th scope="row">Total</th>
+                        <th  scope="row" style="color: red;">
+                            <div class="amount-in-table float-right">
+                                <i class="las la-rupee-sign"></i>{{ total_amt|intcomma }}
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th scope="row">Average</th>
+                        <th  scope="row" style="color: red;">
+                            <div class="float-right">
+                                <span class="amount-in-table"><i class="las la-rupee-sign"></i>{{ avg|intcomma }}</span>
+                                /day
+                            </div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mt-2 em-text">
+        <div class="card-header">
+            <div class="float-left"><h3><i class="las la-calendar-day"></i> Spendings by date</h3></div>                        
+        </div>
+        <div class="card-body">
+            
+            <table class="table table-responsive">
+                <thead>
+                  <tr>                    
+                    <th scope="col">Date</th>                    
+                    <th scope="col">Total Spendings</th>                               
+                  </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for entry in summary %}
+                    <tr>                        
+                        <th scope="row">
+                            <a href="{% url 'em:home' %}?ref_dt={{ entry.date|date:'Y-m-d' }}">
+                                #{{ forloop.counter }} - {{ entry.date }}
+                            </a>
+                        </th>                        
+                        <td class="amount-in-table" style="color:red; font-size: 20px;">
+                            <i class="las la-rupee-sign"></i>{{ entry.amount__sum|intcomma }}                            
+                        </td>
+                    </tr>     
+                    {% endfor %}                               
+                </tbody>
+              </table>
+                       
+        </div>        
+    </div>
+     
+</div>
+{% endblock %}
+

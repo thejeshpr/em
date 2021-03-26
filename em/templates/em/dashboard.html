@@ -52,14 +52,11 @@
 
             </div>
             <div class="card-footer">
-                <div>                
-                    <a href="{% url 'em:home' %}?delta={{ delta| add:1 }}&ref_dt={{ ref_dt }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-left"></i></a>  
-                    <a href="{% url 'em:home' %}?delta={{ delta | add:-1 }}&ref_dt={{ ref_dt }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-right"></i></a>              
+                <div class="float-right">                                    
                     <a href="{% url 'em:home' %}?last_n_days=7" class="btn btn-dark btn-sm"><i class="las la-calendar-week"></i> 7d</a>              
                     <a href="{% url 'em:home' %}?last_n_days=30" class="btn btn-dark btn-sm"><i class="las la-calendar-alt"></i> 30d</a>              
 
                     <a class="btn btn-sm btn-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="las la-filter"></i></a>
-
                       <div class="collapse mt-2 mb-2" id="collapseExample">
                         <div class="card card-body"> 
 
@@ -81,6 +78,9 @@
 
                         </div>
                       </div>
+                    
+                      <a href="{% url 'em:home' %}?delta={{ delta| add:1 }}&ref_dt={{ ref_dt }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-left"></i></a>  
+                    <a href="{% url 'em:home' %}?delta={{ delta | add:-1 }}&ref_dt={{ ref_dt }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-right"></i></a>              
                 </div>
               </div>
         </div>
