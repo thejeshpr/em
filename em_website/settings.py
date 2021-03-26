@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 's&(=j^mm8psan9mb-7l$3c5=o7lw-b_5#nig%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if os.environ.get('DEBUG', 'TRUE') == 'FALSE' else True
 
-ALLOWED_HOSTS = ['my-transaction.herokuapp.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['transzactions.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
