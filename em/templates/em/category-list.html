@@ -28,11 +28,11 @@
                         </th>                        
                         <td>
                             <span class="amount-in-table" style="color: red; font-size: 21px;">
-                                {{ entry.total_amt }} 
+                                <i class="las la-rupee-sign"></i>{{ entry.total_amt }} 
                             </span>
                             ({{ entry.percentage_share }})%
                             <div class="progress" style="height: 4px;">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: {{ entry.percentage_share }}%" aria-valuenow="{{ entry.percentage_share }}" aria-valuemin="0" aria-valuemax="100" ></div>
+                                <div class="progress-bar bg-info" role="progressbar" style="width: {{ entry.percentage_share }}%" aria-valuenow="{{ entry.percentage_share }}" aria-valuemin="0" aria-valuemax="100" ></div>
                             </div>                    
                         </td>
                     </tr>     
