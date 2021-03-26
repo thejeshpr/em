@@ -26,10 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 's&(=j^mm8psan9mb-7l$3c5=o7lw-b_5#nig%cackdhdugy)d^'
+SECRET_KEY = os.environ.get('SECRET_KEY', 's&(=j^mm8psan9mb-7l$3c5=o7lw-b_5#nig%cackdhdugy)d^')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['my-transaction.herokuapp.com', '127.0.0.1', 'localhost']
 
@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'crispy_forms',
-    'em'
+    'em',
 ]
 
 MIDDLEWARE = [
