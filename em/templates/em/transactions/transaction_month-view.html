@@ -10,7 +10,12 @@
     <div class="card mt-2 em-text">
 
         <div class="card-header">
-            <div class="float-left"><h3><i class="las la-chart-bar"></i> Overall Spendings</h3></div>                        
+            <div class="float-left">
+                <h3>
+                    <i class="las la-chart-bar"></i> Overall Spendings<br/>                
+                </h3>
+                <secondary><i class="las la-calendar-day"></i> {{ cur_month|date:'M, Y' }}</secondary>                
+            </div>
         </div>
 
         <div class="card-body">
@@ -36,6 +41,15 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="card-footer">
+            <div class="float-right">
+                <a href="{% url 'em:transaction-summary-month' %}?ref_dt={{ prev_month|date:'m-Y' }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-left"></i></a>                  
+                <a href="{% url 'em:transaction-summary-month' %}" class="btn btn-sm btn-dark"><i class="las la-calendar-day"></i></a>  
+                <a href="{% url 'em:transaction-summary-month' %}?ref_dt={{ next_month|date:'m-Y' }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-right"></i></a> 
+            </div>
+        </div>
+
     </div>
 
     <div class="card mt-2 em-text">
@@ -66,8 +80,8 @@
                             </div>                            
                         </td>
                     </tr>     
-                    {% endfor %} 
-                                                  
+                    {% endfor %}    
+
                 </tbody>
               </table>
                        
