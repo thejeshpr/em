@@ -1,4 +1,5 @@
 # import datetime
+from calendar import monthrange
 from datetime import date, timedelta, datetime
 
 from dateutil import relativedelta
@@ -56,5 +57,10 @@ def transactions_month_view(request):
                             .order_by('-date')
     context['avg'] = Transaction.objects.filter(**filters).aggregate(avg=Avg('amount')).get('avg')
     context['avg'] = int(context['avg']) if context['avg'] else 0
-    context['total_amt'] = Transaction.objects.filter(**filters).aggregate(amount=Sum('amount')).get('amount')
+    context['total_amt'] = Transaction.objects.filter(**filters).aggregate(amount=Sum('amount')).get('amount') or 0
+    if context['total_amt']:
+        days = monthrange(date.today().year, date.today().month)
+        context['avg'] = context['total_amt'] // days[1]
+    else:
+        context['avg'] = 0
     return render(request, 'em/transactions/transaction_month-view.html', context=context)
