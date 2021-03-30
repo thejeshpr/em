@@ -1,6 +1,7 @@
 # import datetime
 from datetime import date, timedelta, datetime
 
+from dateutil import relativedelta
 
 from django.db.models import Sum, Count
 # from dateutil.relativedelta import relativedelta
@@ -202,10 +203,10 @@ class TransactionHelper(object):
             filters.update(date__range = TransactionHelper.get_range(int(kwargs.get('last_n_days'))))
             context['selected_range'] = f"Last {kwargs.get('last_n_days')} days"
             
-        elif kwargs.get('delta'):
-            actual_dt = ref_dt - timedelta(days=kwargs.get('delta'))            
-            filters.update(date=actual_dt)
-            context['selected_range'] = datetime.strftime(actual_dt, TransactionHelper.date_fmt)
+        # elif kwargs.get('delta'):
+        #     actual_dt = ref_dt - timedelta(days=kwargs.get('delta'))            
+        #     filters.update(date=actual_dt)
+        #     context['selected_range'] = datetime.strftime(actual_dt, TransactionHelper.date_fmt)
             
 
         elif kwargs.get('from_dt') and kwargs.get('to_dt'):
@@ -218,7 +219,7 @@ class TransactionHelper(object):
 
         elif kwargs.get('ref_dt'):            
             filters.update(date=ref_dt)
-            context['selected_range'] = kwargs.get('ref_dt')            
+            context['selected_range'] = kwargs.get('ref_dt')                 
 
         else:
             filters.update(date=date.today())
@@ -227,6 +228,8 @@ class TransactionHelper(object):
         context['transactions'] = Transaction.objects.filter(**filters).order_by('-date', '-pk')
         context['delta'] = kwargs.get("delta")
         context['ref_dt'] = datetime.strftime(ref_dt, TransactionHelper.date_fmt)
+        context['prev'] = ref_dt - relativedelta.relativedelta(days=1)
+        context['next'] = ref_dt + relativedelta.relativedelta(days=1)
 
         overall_expns = Transaction.objects.filter(**filters)\
                             .aggregate(expense=Sum('amount'))\

@@ -79,8 +79,8 @@
                         </div>
                       </div>
                     
-                      <a href="{% url 'em:home' %}?delta={{ delta| add:1 }}&ref_dt={{ ref_dt }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-left"></i></a>  
-                    <a href="{% url 'em:home' %}?delta={{ delta | add:-1 }}&ref_dt={{ ref_dt }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-right"></i></a>              
+                      <a href="{% url 'em:home' %}?ref_dt={{ prev|date:'Y-m-d' }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-left"></i></a>  
+                    <a href="{% url 'em:home' %}?ref_dt={{ next|date:'Y-m-d' }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-right"></i></a>              
                 </div>
               </div>
         </div>
