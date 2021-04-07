@@ -11,8 +11,9 @@
       <tr>                       
         <td>
           <a href="{% url 'em:transaction-detail' pk=transaction.pk %}">
-            <strong class="desc-in-table">#{{ transaction.id }} {{ transaction.title }}</strong>
+            <strong class="desc-in-table">#{{ transaction.id }} {{ transaction.title }}</strong>            
           </a>
+          <a href="{% url 'em:transaction-update' pk=transaction.pk %}"><i class="las la-edit"></i></a>
         <br/>
         <a href="{% url 'em:category-detail' pk=transaction.category.pk %}">
             <span class="secondary" style="color:gray;"><i class="{{ transaction.category.icon }}"></i> {{ transaction.category }}</span><br/>
