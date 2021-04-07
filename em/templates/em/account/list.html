@@ -1,0 +1,41 @@
+{% extends 'em/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div>
+
+    <div class="card mt-2">
+        <div class="card-header">
+            <div class="float-left"><h3><i class="{{ category.icon }}"></i> Accounts</h3></div>                        
+        </div>
+        <div class="card-body">
+            
+            <table class="table table-responsive">
+                <thead>
+                  <tr>                    
+                    <th scope="col">Name</th>                    
+                    <th scope="col">Type</th>                               
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for account in accounts %}
+                    <tr>                        
+                        <th scope="row">
+                            <a href="#">
+                                #{{ account.pk }} - <i class="{{ account.icon }}"></i>{{ account.name }} 
+                            </a>
+                        </th>                        
+                        <td>
+                            {{ account.typ }}                            
+                        </td>
+                    </tr>     
+                    {% endfor %}                               
+                </tbody>
+              </table>
+                       
+        </div>        
+    </div>       
+</div>
+{% endblock %}
+

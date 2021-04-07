@@ -17,6 +17,7 @@
             <div class="em-text">
                 <span><strong>Name</strong>: {{ transaction.title }}</span><br/>
                 <span><strong>Amount</strong>: {{ transaction.amount }}</span><br/>
+                <span><strong>Account</strong>: {{ transaction.account }}</span><br/>
                 <span><strong>Date</strong>: {{ transaction.date|date:'d M, Y' }}</span><br/>
                 <span><strong>Catgeory</strong>: <a href="{% url 'em:category-detail' pk=transaction.category.pk %}">{{ transaction.category }}</a></span><br/>
                 <span><strong>Note</strong>: {{ transaction.desc }}</span>

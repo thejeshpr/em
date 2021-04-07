@@ -24,6 +24,29 @@ class Category(models.Model):
         return reverse('em:home')
 
 
+class Account(models.Model):
+    ACT_TYPE = (
+        ('S', 'Savings'),
+        ('C', 'Credit')
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    name = models.CharField(max_length=200, unique=True)
+    icon = models.CharField(max_length=200, blank=True, null=True)
+    typ = models.CharField(max_length=3, choices=ACT_TYPE)
+
+    def __str__(self):
+        typ = "SVG" if self.typ else "CR"
+        return f'{self.name} ({typ})'
+
+    def __repr__(self):
+        return f'<Account: {self.key}>'
+
+    def get_absolute_url(self):        
+        return reverse('em:home')
+
+
 class Transaction(models.Model):
     TRAN_TYPES = (
         ('EX', 'Expense'),
@@ -32,10 +55,11 @@ class Transaction(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    account = models.ForeignKey('Account', related_name='transactions', on_delete=models.SET_NULL, blank=True, null=True)
     amount = models.FloatField()
     category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name="transactions")
     date = models.DateField(auto_now=False, auto_now_add=False)
-    desc = models.TextField(blank=True, null=True)
+    desc = models.TextField(blank=True, null=True)    
     tran_type = models.CharField(max_length=2, choices=TRAN_TYPES, default="EX")
     title = models.CharField(max_length=200,unique_for_date='date')
 
@@ -68,3 +92,5 @@ class KeyStore(models.Model):
 
     def get_absolute_url(self):        
         return reverse('em:keystore-list')
+
+

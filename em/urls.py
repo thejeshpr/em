@@ -3,6 +3,7 @@ from django.urls import path
 from . import views
 from . import views_keystore
 from . import views_transaction
+from . import views_account
 
 
 app_name = 'em'
@@ -21,7 +22,10 @@ urlpatterns = [
     path('transaction/<int:pk>', views.TrasactionDetailView.as_view(), name='transaction-detail'),
     path('transaction/<int:pk>/update', views.TransactionUpdateView.as_view(), name='transaction-update'),
     path('transaction/<int:pk>/delete', views.TransactionDeleteView.as_view(), name='transaction-delete'),
-    
+
+    path('account', views_account.AccountListView.as_view(), name='account-list'),
+    path('account/add', views_account.AccountCreateView.as_view(), name='account-add'),
+        
 
     path('key-store', views_keystore.KSListView.as_view(), name='keystore-list'),
     path('key-store/add', views_keystore.KSCreateView.as_view(), name='keystore-add'),

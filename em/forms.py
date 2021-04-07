@@ -4,7 +4,7 @@ from django import forms
 from django.forms import ModelForm
 from django.utils import timezone
 
-from .models import Category, Transaction, KeyStore
+from .models import Category, Transaction, KeyStore, Account
 
 class CategoryForm(ModelForm):    
     class Meta:
@@ -21,8 +21,9 @@ class TransactionForm(ModelForm):
         fields = [
             'title',            
             'amount',
+            'account',            
             'date',
-            'category',
+            'category',            
             'tran_type',
             'desc',
         ]
@@ -42,3 +43,13 @@ class KeyStoreForm(ModelForm):
             'key',
             'value'
         ]   
+
+
+class AccountForm(ModelForm):
+    class Meta:
+        model = Account
+        fields = [
+            'name',
+            'icon',
+            'typ'
+        ]
