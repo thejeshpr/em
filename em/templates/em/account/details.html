@@ -1,0 +1,36 @@
+{% extends 'em/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div>
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                <i class="{{ account.icon }}"></i> {{ account.name }}                
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="em-text">
+                <span><strong>Name</strong>: {{ account.name }}</span><br/>
+                <span><strong>Type</strong>: {{ account.typ }}</span><br/>
+                <span><strong>Total Amuont</strong>: {% firstof spendings "0.0" %}</span><br/>
+                <span><strong>Month</strong>: {{ cur_month|date:'m-Y' }}</span><br/>                
+            </div>            
+            <hr/>
+            <a href="#" class="btn btn-sm btn-primary">Edit</a>
+            <a href="#" class="btn btn-sm btn-danger">Delete</a>            
+        </div>
+
+        <div class="card-footer">
+            <div class="float-right">
+                <a href="?ref_month={{ prev_month|date:'m-Y' }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-left"></i>{{ prev_month|date:'m-Y' }}</a>                  
+                <a href="{% url 'em:account-detail' account.pk %}" class="btn btn-sm btn-dark"><i class="las la-calendar-day"></i></a>  
+                <a href="?ref_month={{ next_month|date:'m-Y' }}" class="btn btn-sm btn-dark">{{ next_month|date:'m-Y' }}<i class="las la-angle-double-right"></i></a> 
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+

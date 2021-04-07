@@ -41,7 +41,7 @@ class Account(models.Model):
         return f'{self.name} ({typ})'
 
     def __repr__(self):
-        return f'<Account: {self.key}>'
+        return f'<Account: {self.name}>'
 
     def get_absolute_url(self):        
         return reverse('em:home')

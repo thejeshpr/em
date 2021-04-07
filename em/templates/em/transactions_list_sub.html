@@ -18,7 +18,12 @@
         <a href="{% url 'em:category-detail' pk=transaction.category.pk %}">
             <span class="secondary" style="color:gray;"><i class="{{ transaction.category.icon }}"></i> {{ transaction.category }}</span><br/>
         </a>        
-        <i class="las la-exchange-alt"></i> <a href="#">{{ transaction.account }}</a><br/>
+
+        <a href="{% url 'em:account-detail' transaction.account.pk %}">
+          <span class="secondary" style="color:gray;">
+            <i class="las la-exchange-alt"></i> {{ transaction.account }}
+            </span>
+        </a><br/>
         <span class="secondary" style="color:gray;"><i class="las la-calendar"></i> {{ transaction.date }}</span>        
         </td>         
 
