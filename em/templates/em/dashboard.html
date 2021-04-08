@@ -24,7 +24,7 @@
             <div class="card-header">
               <h3 style="display: inline-block;"><i class="las la-chart-pie"></i> Spendings
                 {% if total_expense %}
-                  <span class="amount-in-table" style="color: red; font-size: 20px;">-<i class="las la-rupee-sign"></i>{{ total_expense|intcomma }}</span>
+                  <span class="amount-in-table" style="color: red; font-size: 20px;">-<i class="las la-rupee-sign"></i>{{ total_expense|floatformat|intcomma }}</span>
                 {% else %}
                 <span class="amount-in-table"><i class="las la-rupee-sign"></i>0</span>
                 {% endif %}
@@ -38,7 +38,7 @@
                     <a style="color: black;" href="{% url 'em:category-detail' pk=entry.category.pk %}">
                       <i class="{{ entry.category.icon }}"></i> {{ entry.category.name }}:
                     </a>
-                    {{ entry.percentage }}%(<i class="las la-rupee-sign"></i><span class="amount-in-table" style="font-size: 15px;">{{ entry.total_amt }}</span>)</span>                    
+                    {{ entry.percentage }}%(<i class="las la-rupee-sign"></i><span class="amount-in-table" style="font-size: 15px;">{{ entry.total_amt|floatformat|intcomma }}</span>)</span>                    
                     <div class="progress mt-1" style="height: 4px;">
                         <div class="progress-bar bg-info" role="progressbar" style="width: {{ entry.percentage }}%" aria-valuenow="{{ entry.percentage }}" aria-valuemin="0" aria-valuemax="100" ></div>                        
                     </div>                                        

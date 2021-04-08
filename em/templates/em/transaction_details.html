@@ -9,7 +9,7 @@
             <h3>
                 <i class="{{ transaction.category.icon }}"></i> {{ transaction.title }}
                 <span class="amount-in-table">
-                    <i class="las la-rupee-sign"></i>{{ transaction.amount }}
+                    <i class="las la-rupee-sign"></i>{{ transaction.amount|floatformat }}
                 </span>
             </h3>
         </div>

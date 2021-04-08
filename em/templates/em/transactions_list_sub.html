@@ -30,10 +30,10 @@
 
         {% if transaction.tran_type == 'EX' %}
           <td style="text-align: right;">
-              <span class="amount-in-table" style="color: red;">-<i class="las la-rupee-sign"></i>{{ transaction.amount|intcomma }}</span>                            
+              <span class="amount-in-table" style="color: red;">-<i class="las la-rupee-sign"></i>{{ transaction.amount|floatformat|intcomma }}</span>                            
           </td>
         {% elif transaction.tran_type == 'IN' %}
-          <td class="amount-in-table float-right" style="color: green;">+<i class="las la-rupee-sign"></i>{{ transaction.amount|intcomma }}</td>                      
+          <td class="amount-in-table float-right" style="color: green;">+<i class="las la-rupee-sign"></i>{{ transaction.amount|floatformat|intcomma }}</td>                      
         {% endif %}
         
       </tr>

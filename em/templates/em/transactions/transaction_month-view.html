@@ -25,7 +25,7 @@
                         <th scope="row">Total</th>
                         <th  scope="row" style="color: red;">
                             <div class="amount-in-table float-right">
-                                <i class="las la-rupee-sign"></i>{{ total_amt|intcomma }}
+                                <i class="las la-rupee-sign"></i>{{ total_amt|floatformat|intcomma }}
                             </div>
                         </th>
                     </tr>
@@ -33,7 +33,7 @@
                         <th scope="row">Average</th>
                         <th  scope="row" style="color: red;">
                             <div class="float-right">
-                                <span class="amount-in-table"><i class="las la-rupee-sign"></i>{{ avg|intcomma }}</span>
+                                <span class="amount-in-table"><i class="las la-rupee-sign"></i>{{ avg|floatformat|intcomma }}</span>
                                 /day
                             </div>
                         </th>
@@ -74,9 +74,9 @@
                                 #{{ forloop.counter }} - {{ entry.date|date:'d-M-Y' }}
                             </a>
                         </th>                        
-                        <td class="amount-in-table" style="color:red; font-size: 20px;">
+                        <td class="amount-in-table" style="color:red;">
                             <div class="float-right">
-                                <i class="las la-rupee-sign"></i>{{ entry.amount__sum|intcomma }}                            
+                                <i class="las la-rupee-sign"></i>{{ entry.amount__sum|floatformat|intcomma }}                            
                             </div>                            
                         </td>
                     </tr>     
