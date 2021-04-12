@@ -76,7 +76,8 @@ class AccountDetailView(generic.DetailView):
         context['spendings'] = Transaction.objects\
                                 .filter(account=act, **filters)\
                                     .aggregate(spendings=Sum('amount'))\
-                                        .get('spendings')        
+                                        .get('spendings')   
+        context['transactions'] = Transaction.objects.filter(account=act, **filters)
         return context
 
 
