@@ -16,18 +16,26 @@
                   <tr>                    
                     <th scope="col">Name</th>                    
                     <th scope="col">Type</th>                               
+                    <th scope="col">Total Spendings</th>                               
                   </tr>
                 </thead>
                 <tbody>
-                    {% for account in accounts %}
+                    {% for entry in data %}
                     <tr>                        
                         <th scope="row">
-                            <a href="#">
-                                #{{ account.pk }} - <i class="{{ account.icon }}"></i>{{ account.name }} 
+                            <a href="{% url 'em:account-detail' entry.account.pk %}">
+                                #{{ entry.account.pk }} - <i class="{{ entry.account.icon }}"></i>{{ entry.account.name }} 
                             </a>
                         </th>                        
                         <td>
-                            {{ account.typ }}                            
+                            {% if entry.account.typ == "S" %}
+                                SAVINGS
+                            {% else %}
+                                CREDIT
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ entry.spendings }}
                         </td>
                     </tr>     
                     {% endfor %}                               

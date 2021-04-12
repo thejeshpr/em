@@ -36,6 +36,20 @@ class AccountListView(generic.ListView):
     context_object_name = "accounts"
     template_name = 'em/account/list.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        data = list()
+        for act in context.get('accounts'):
+            spendings = Transaction.objects.filter(account=act)\
+                            .aggregate(spendings=Sum('amount'))\
+                                .get('spendings')        
+            data.append({
+                "account": act,
+                "spendings": spendings
+            })
+        context['data'] = data
+        return context
+
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class AccountDetailView(generic.DetailView):

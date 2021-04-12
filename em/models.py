@@ -37,7 +37,7 @@ class Account(models.Model):
     typ = models.CharField(max_length=3, choices=ACT_TYPE)
 
     def __str__(self):
-        typ = "SVG" if self.typ else "CR"
+        typ = "SVG" if self.typ == 'S' else "CR"
         return f'{self.name} ({typ})'
 
     def __repr__(self):
