@@ -196,7 +196,7 @@ class TransactionHelper(object):
         today_dt = date.today()        
         labels = []
         data = []
-        for i in range(1, 7, 1):
+        for i in range(7):
             dt = today_dt - relativedelta.relativedelta(days=i)
             labels.append(dt.strftime('%d-%m-%Y'))
             data.append(Transaction.objects.filter(date=dt).aggregate(expense=Sum('amount')).get('expense') or 0)
