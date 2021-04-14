@@ -94,7 +94,13 @@
     <div class="card p-1">
       {% with item_name="bar_chart" %} 
       {% with chart_type="line" %}        
+      {% with data=tran_data %}        
+      {% with label=tran_label %}        
+      {% with chart_title="Spendings by Date" %}        
       {% include "em/chart/daily-spendings.html" %}
+      {% endwith %}
+      {% endwith %}
+      {% endwith %}
       {% endwith %}
       {% endwith %}
     </div>    
@@ -103,7 +109,13 @@
     <div class="card p-1">
       {% with item_name="pie_chart" %}    
       {% with chart_type="doughnut" %}
+      {% with data=cat_data %}        
+      {% with label=cat_label %}      
+      {% with chart_title="Spendings by Category" %}        
       {% include "em/chart/daily-spendings.html" %}
+      {% endwith %}
+      {% endwith %}
+      {% endwith %}
       {% endwith %}
       {% endwith %}
     </div>    

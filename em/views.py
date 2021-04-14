@@ -242,7 +242,8 @@ class TransactionHelper(object):
         overall_expns = Transaction.objects.filter(**filters)\
                             .aggregate(expense=Sum('amount'))\
                             .get('expense')        
-
+        cat_names = []
+        cat_amts = []
         for category in Category.objects.all():
             amount = Transaction.objects\
                         .filter(category=category, **filters)\
@@ -254,11 +255,15 @@ class TransactionHelper(object):
                         'total_amt': amount,
                         'percentage': int((amount / overall_expns) * 100)                        
                     })
+                cat_names.append(category.name)
+                cat_amts.append(amount)
         
         context['spendings'] = spending
         context['total_expense'] = overall_expns
         
-        context["label"], context["data"] = TransactionHelper.get_daily_spending()
+        context["tran_label"], context["tran_data"] = TransactionHelper.get_daily_spending()
+        context['cat_label'], context['cat_data'] = cat_names, cat_amts
+        print(context['cat_label'], context['cat_data'])
         return context
 
         
