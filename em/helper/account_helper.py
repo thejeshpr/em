@@ -35,7 +35,7 @@ class AccountHelper(object):
                 date__month=dt.month,
                 date__year=dt.year
             )
-                    
+
         context['prev_month'] = dt - relativedelta.relativedelta(months=1)
         context['next_month'] = dt + relativedelta.relativedelta(months=1)
         context['cur_month'] = dt
@@ -43,6 +43,6 @@ class AccountHelper(object):
                                 .filter(account=account, **filters)\
                                     .aggregate(spendings=Sum('amount'))\
                                         .get('spendings')   
-        context['transactions'] = Transaction.objects.filter(account=account, **filters)
+        context['transactions'] = Transaction.objects.filter(account=account, **filters).order_by("-date")
         return context        
 
