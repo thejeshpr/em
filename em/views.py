@@ -192,6 +192,20 @@ class TransactionHelper(object):
         ]        
 
     @staticmethod
+    def get_daily_spending():
+        today_dt = date.today()        
+        labels = []
+        data = []
+        for i in range(1, 7, 1):
+            dt = today_dt - relativedelta.relativedelta(days=i)
+            labels.append(dt.strftime('%d-%m-%Y'))
+            data.append(Transaction.objects.filter(date=dt).aggregate(expense=Sum('amount')).get('expense') or 0)
+            # day_dat[dt.strftime('%d-%m-%Y')] = Transaction.objects.filter(date=dt).aggregate(expense=Sum('amount')).get('expense') or 0
+        # print(day_dat)
+        # print(len(data))
+        return labels, data
+
+    @staticmethod
     def get_spending(**kwargs):
         context = {}
         spending = list()
@@ -201,13 +215,7 @@ class TransactionHelper(object):
 
         if kwargs.get('last_n_days'):            
             filters.update(date__range = TransactionHelper.get_range(int(kwargs.get('last_n_days'))))
-            context['selected_range'] = f"Last {kwargs.get('last_n_days')} days"
-            
-        # elif kwargs.get('delta'):
-        #     actual_dt = ref_dt - timedelta(days=kwargs.get('delta'))            
-        #     filters.update(date=actual_dt)
-        #     context['selected_range'] = datetime.strftime(actual_dt, TransactionHelper.date_fmt)
-            
+            context['selected_range'] = f"Last {kwargs.get('last_n_days')} days"            
 
         elif kwargs.get('from_dt') and kwargs.get('to_dt'):
             from_dt, to_dt = (
@@ -249,6 +257,8 @@ class TransactionHelper(object):
         
         context['spendings'] = spending
         context['total_expense'] = overall_expns
+        
+        context["label"], context["data"] = TransactionHelper.get_daily_spending()
         return context
 
         
