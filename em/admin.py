@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Category, Transaction, KeyStore
+from .models import Category, Transaction, KeyStore, Account
 
 
 @admin.register(Category)
@@ -30,3 +30,9 @@ class TransactionAdmin(admin.ModelAdmin):
 class KeyStoreAdmin(admin.ModelAdmin):
     list_display = ('id', 'key', 'value')
     search_fields = ('key',)
+
+
+@admin.register(Account)
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'statement_date', 'typ')
+    search_fields = ('name',)

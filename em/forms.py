@@ -50,6 +50,12 @@ class AccountForm(ModelForm):
         model = Account
         fields = [
             'name',
-            'icon',
-            'typ'
+            'icon',            
+            'typ',
+            'statement_date',
         ]
+
+    # statement_date = forms.DateField(
+    #     # input_formats=['%d/%m/%Y'],
+    #     # initial=datetime.date.today
+    # )        

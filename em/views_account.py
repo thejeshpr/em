@@ -22,6 +22,8 @@ from .models import Account, Transaction
 
 from .forms import AccountForm
 
+from .helper import AccountHelper
+
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class AccountCreateView(edit.CreateView):
@@ -59,33 +61,19 @@ class AccountDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        act = context.get('account')
-        
-        ref_month = self.request.GET.get('ref_month')
-        
-        dt_fmt = '%m-%Y'
-        dt = datetime.strptime(ref_month, dt_fmt) if ref_month else date.today()
-        
-        filters = dict(
-            date__month=dt.month,
-            date__year=dt.year
+        return AccountHelper.get_account_details(            
+            context=context,
+            ref_month=self.request.GET.get('ref_month'),
+            from_dt=self.request.GET.get('fromDate'),
+            to_dt=self.request.GET.get('toDate')
         )
-        context['prev_month'] = dt - relativedelta.relativedelta(months=1)
-        context['next_month'] = dt + relativedelta.relativedelta(months=1)
-        context['cur_month'] = dt
-        context['spendings'] = Transaction.objects\
-                                .filter(account=act, **filters)\
-                                    .aggregate(spendings=Sum('amount'))\
-                                        .get('spendings')   
-        context['transactions'] = Transaction.objects.filter(account=act, **filters)
-        return context
+        
 
-
-# @method_decorator(login_required(login_url='/login/'), name='dispatch')
-# class KSUpdateView(edit.UpdateView):
-#     model = KeyStore
-#     form_class = KeyStoreForm
-#     template_name = 'em/key-store_create.html'    
+@method_decorator(login_required(login_url='/login/'), name='dispatch')
+class AccountUpdateView(edit.UpdateView):
+    model = Account
+    form_class = AccountForm
+    template_name = 'em/account/edit.html'    
 
 
 # @method_decorator(login_required(login_url='/login/'), name='dispatch')

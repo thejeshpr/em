@@ -26,6 +26,7 @@ urlpatterns = [
     path('account', views_account.AccountListView.as_view(), name='account-list'),
     path('account/add', views_account.AccountCreateView.as_view(), name='account-add'),
     path('account/<int:pk>', views_account.AccountDetailView.as_view(), name='account-detail'),
+    path('account/<int:pk>/update', views_account.AccountUpdateView.as_view(), name='account-update'),
         
 
     path('key-store', views_keystore.KSListView.as_view(), name='keystore-list'),
