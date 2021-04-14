@@ -52,7 +52,7 @@ class AccountForm(ModelForm):
             'name',
             'icon',            
             'typ',
-            'statement_date',
+            # 'statement_date',
         ]
 
     # statement_date = forms.DateField(

@@ -34,5 +34,5 @@ class KeyStoreAdmin(admin.ModelAdmin):
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'statement_date', 'typ')
+    list_display = ('id', 'name', 'typ')
     search_fields = ('name',)

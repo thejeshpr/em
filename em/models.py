@@ -34,7 +34,7 @@ class Account(models.Model):
 
     name = models.CharField(max_length=200, unique=True)
     icon = models.CharField(max_length=200, blank=True, null=True)
-    statement_date = models.IntegerField(help_text="Statement Date", default=1)
+    # statement_date = models.IntegerField(help_text="Statement Date", default=1)
     typ = models.CharField(max_length=3, choices=ACT_TYPE)
     
 
