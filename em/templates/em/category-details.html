@@ -15,12 +15,14 @@
                 <span><strong>Name: </strong>{{ category.name }}</span><br/>
                 <span><strong>Icon: </strong>{{ category.icon }}</span><br/>
                 <span><strong>Transactions: </strong>{{ category.transactions.count }}</span><br/>
-                <span><strong>Total Amount: </strong>{{ ttl_amt }}</span><br/>                                
+                <span><strong>Total Amount: </strong>{{ ttl_amt }}</span><br/>
+                {% if request.GET.ref_dt %}
+                    <span><strong>Selected date: </strong>{{ request.GET.ref_dt }} <a href="{% url 'em:category-detail' pk=category.pk %}" style="color: red;"><i class="las la-trash"></i></a></span><br/>                    
+                {% endif %}
             </div>
             <br/>
             
-            {% include "em/transactions_list_sub.html" %}
-            
+            {% include "em/transactions_list_sub.html" %}            
                        
         </div>        
     </div>
