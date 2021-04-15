@@ -196,9 +196,9 @@ class TransactionHelper(object):
         today_dt = date.today()        
         labels = []
         data = []
-        for i in range(7):
+        for i in reversed(range(7)):
             dt = today_dt - relativedelta.relativedelta(days=i)
-            labels.append(dt.strftime('%d-%m-%Y'))
+            labels.append(dt.strftime('%d-%b'))
             data.append(Transaction.objects.filter(date=dt).aggregate(expense=Sum('amount')).get('expense') or 0)
             # day_dat[dt.strftime('%d-%m-%Y')] = Transaction.objects.filter(date=dt).aggregate(expense=Sum('amount')).get('expense') or 0
         # print(day_dat)
@@ -263,7 +263,7 @@ class TransactionHelper(object):
         
         context["tran_label"], context["tran_data"] = TransactionHelper.get_daily_spending()
         context['cat_label'], context['cat_data'] = cat_names, cat_amts
-        print(context['cat_label'], context['cat_data'])
+        # print(context['cat_label'], context['cat_data'])
         return context
 
         
