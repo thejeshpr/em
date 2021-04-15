@@ -18,9 +18,9 @@
                 <span><strong>Total Amount: </strong>{{ ttl_amt }}</span><br/>                                
             </div>
             <br/>
-            {% with transactions=category.transactions.all %}
+            
             {% include "em/transactions_list_sub.html" %}
-            {% endwith %}
+            
                        
         </div>        
     </div>

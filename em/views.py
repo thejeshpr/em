@@ -78,9 +78,19 @@ class CategoryDetailView(generic.DetailView):
     template_name = 'em/category-details.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)        
         obj = kwargs.get('object')
-        context['ttl_amt'] = obj.transactions.all().aggregate(ttl_amt=Sum('amount')).get('ttl_amt')
+        ref_dt = self.request.GET.get("ref_dt")
+        date_fmt = "%Y-%m-%d"
+        
+        if ref_dt:
+            ref_dt = datetime.strptime(ref_dt, date_fmt)
+            context['transactions'] = obj.transactions.filter(date=ref_dt)
+            context['ttl_amt'] = obj.transactions.filter(date=ref_dt).aggregate(ttl_amt=Sum('amount')).get('ttl_amt')
+            print(context)
+        else:
+            context['transactions'] = obj.transactions.all()
+            context['ttl_amt'] = obj.transactions.all().aggregate(ttl_amt=Sum('amount')).get('ttl_amt')
         return context
 
 
@@ -199,10 +209,7 @@ class TransactionHelper(object):
         for i in reversed(range(7)):
             dt = today_dt - relativedelta.relativedelta(days=i)
             labels.append(dt.strftime('%d-%b'))
-            data.append(Transaction.objects.filter(date=dt).aggregate(expense=Sum('amount')).get('expense') or 0)
-            # day_dat[dt.strftime('%d-%m-%Y')] = Transaction.objects.filter(date=dt).aggregate(expense=Sum('amount')).get('expense') or 0
-        # print(day_dat)
-        # print(len(data))
+            data.append(Transaction.objects.filter(date=dt).aggregate(expense=Sum('amount')).get('expense') or 0)            
         return labels, data
 
     @staticmethod

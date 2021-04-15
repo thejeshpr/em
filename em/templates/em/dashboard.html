@@ -35,7 +35,7 @@
                 <hr/>
                 {% for entry in spendings %}
                   <div class="mt-2">
-                    <a style="color: black;" href="{% url 'em:category-detail' pk=entry.category.pk %}">
+                    <a style="color: black;" href="{% url 'em:category-detail' pk=entry.category.pk %}?ref_dt={{ref_dt}}">
                       <i class="{{ entry.category.icon }}"></i> {{ entry.category.name }}:
                     </a>
                     {{ entry.percentage }}%(<i class="las la-rupee-sign"></i><span class="amount-in-table" style="font-size: 15px;">{{ entry.total_amt|floatformat|intcomma }}</span>)</span>                    
