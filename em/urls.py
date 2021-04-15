@@ -34,5 +34,7 @@ urlpatterns = [
     path('key-store/<int:pk>', views_keystore.KSDetailView.as_view(), name='keystore-detail'),
     path('key-store/<int:pk>/update', views_keystore.KSUpdateView.as_view(), name='keystore-update'),
     path('key-store/<int:pk>/delete', views_keystore.KSDeleteView.as_view(), name='keystore-delete'),
+
+    path('test', views.test, name='test'),
             
 ]

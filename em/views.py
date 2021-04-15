@@ -274,3 +274,6 @@ class TransactionHelper(object):
         return context
 
         
+@login_required(login_url='/login/')
+def test(request):            
+    return render(request, 'em/base_test.html')
