@@ -6,9 +6,32 @@ from django.db.models import Sum, Count
 
 from em.models import Account, Transaction
 
+
 class AccountHelper(object):
     date_fmt = '%m-%Y'
     day_fmt = '%Y-%m-%d'
+
+    @staticmethod
+    def get_spendings(overall_expns, **filters):                
+        spendings = list()
+        account_labels = list()
+        account_values = list()
+
+        if overall_expns:
+            for account in Account.objects.all():
+                amount = Transaction.objects\
+                            .filter(account=account, **filters)\
+                            .aggregate(amount=Sum('amount')).get('amount')
+
+                if amount:
+                    spendings.append({
+                        'account': account,
+                        'spendings': amount,
+                        'percentage': int((amount / overall_expns) * 100)
+                    })
+                    account_labels.append(account.name)
+                    account_values.append(amount)
+        return spendings, account_labels, account_values
 
     @staticmethod
     def get_account_details(context: Dict[Any, Any], **kwargs):        

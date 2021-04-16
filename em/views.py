@@ -18,6 +18,10 @@ from django.utils.decorators import method_decorator
 
 from django.db.models import Avg, Count, Min, Sum
 
+from .helper import Helper
+
+from pprint import pprint
+
 
 
 from .models import (
@@ -183,7 +187,9 @@ def dashboard(request):
         to_dt=request.GET.get('toDate'),
     )
 
-    context = TransactionHelper.get_spending(**payload)
+    # context = TransactionHelper.get_spending(**payload)
+    context = Helper.get_data(**payload)
+    # pprint(context)
     return render(request, 'em/dashboard.html', context=context)
 
         

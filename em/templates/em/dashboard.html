@@ -38,7 +38,7 @@
                     <a style="color: black;" href="{% url 'em:category-detail' pk=entry.category.pk %}?ref_dt={{ref_dt}}">
                       <i class="{{ entry.category.icon }}"></i> {{ entry.category.name }}:
                     </a>
-                    {{ entry.percentage }}%(<i class="las la-rupee-sign"></i><span class="amount-in-table" style="font-size: 15px;">{{ entry.total_amt|floatformat|intcomma }}</span>)</span>                    
+                    {{ entry.percentage }}%(<i class="las la-rupee-sign"></i><span class="amount-in-table" style="font-size: 15px;">{{ entry.spendings|floatformat|intcomma }}</span>)</span>                    
                     <div class="progress mt-1" style="height: 4px;">
                         <div class="progress-bar bg-info" role="progressbar" style="width: {{ entry.percentage }}%" aria-valuenow="{{ entry.percentage }}" aria-valuemin="0" aria-valuemax="100" ></div>                        
                     </div>                                        
@@ -90,7 +90,7 @@
 </div>
 
 <div class="row mt-1">
-  <div class="col-md-6 mt-1">
+  <div class="col-md-4 mt-1">
     <div class="card p-1">
       {% with item_name="bar_chart" %} 
       {% with chart_type="line" %}        
@@ -104,13 +104,28 @@
       {% endwith %}
       {% endwith %}
     </div>    
-  </div>
-  <div class="col-md-6 mt-1">
+  </div>  
+  <div class="col-md-4 mt-1">
     <div class="card p-1">
       {% with item_name="pie_chart" %}    
       {% with chart_type="doughnut" %}
       {% with data=cat_data %}        
       {% with label=cat_label %}      
+      {% with chart_title="Spendings by Category" %}        
+      {% include "em/chart/daily-spendings.html" %}
+      {% endwith %}
+      {% endwith %}
+      {% endwith %}
+      {% endwith %}
+      {% endwith %}
+    </div>    
+  </div>
+  <div class="col-md-4 mt-1">
+    <div class="card p-1">
+      {% with item_name="account_chart" %}    
+      {% with chart_type="pie" %}
+      {% with data=account_data %}        
+      {% with label=account_label %}      
       {% with chart_title="Spendings by Category" %}        
       {% include "em/chart/daily-spendings.html" %}
       {% endwith %}
