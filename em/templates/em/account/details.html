@@ -29,8 +29,12 @@
             <br/>
             <br/>
             <strong>Selected Range:</strong> <span class="badge badge-secondary" style="font-size: 13px;">{{ selected_range  }}</span></span><br/>
-            {% include "em/account/filter.html" %}
-            <br/>
+            {% include "em/account/filter.html" %}            
+            {% for period, link in statements.items %}
+                <li>
+                    <a href="{{ link }}">{{ period }}</a>
+                </li>
+            {% endfor %}            
             <br/>
             <div>
                 {% with transactions=transactions %}

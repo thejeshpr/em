@@ -69,3 +69,30 @@ class AccountHelper(object):
         context['transactions'] = Transaction.objects.filter(account=account, **filters).order_by("-date")
         return context        
 
+    @staticmethod
+    def get_act_statments(account):
+        statement_dates = {
+            "Kotak": 15,
+            "Citi Credit": 20,
+            "HDFC Nayana": 20,
+        }
+        
+        dt = statement_dates.get(account)
+        statments = dict()
+
+        if dt:
+            
+
+            # st_dt = date.today() - relativedelta.relativedelta(days=i)
+            for i in range(5):
+                ref_dt = date.today() - relativedelta.relativedelta(months=i)
+                to_dt = date(ref_dt.year, ref_dt.month, dt)
+                from_dt = to_dt - relativedelta.relativedelta(months=1)
+                from_dt = from_dt + relativedelta.relativedelta(days=1)
+                # ?fromDate=2021-03-16&toDate=2021-04-14
+                qp = f'?fromDate={from_dt.strftime("%Y-%m-%d")}&toDate={to_dt.strftime("%Y-%m-%d")}'
+                statments[f'{from_dt.strftime("%b")}-{to_dt.strftime("%b")}'] = qp
+
+        return statments
+                
+

@@ -60,7 +60,8 @@ class AccountDetailView(generic.DetailView):
     template_name = 'em/account/details.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)      
+        context["statements"] = AccountHelper.get_act_statments(context["account"].name)
         return AccountHelper.get_account_details(            
             context=context,
             ref_month=self.request.GET.get('ref_month'),
