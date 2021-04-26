@@ -36,5 +36,7 @@ urlpatterns = [
     path('key-store/<int:pk>/delete', views_keystore.KSDeleteView.as_view(), name='keystore-delete'),
 
     path('test', views.test, name='test'),
+    path('test-download', views_account.file_download, name="test-download"),
+    path('json/<str:entity>', views_account.json_download, name="json-download"),
             
 ]
