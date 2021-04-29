@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Category, Transaction, KeyStore, Account
+from .models import (
+    Account,
+    Budget,
+    Category,
+    Transaction,
+    KeyStore    
+)
 
 
 @admin.register(Category)
@@ -36,3 +42,18 @@ class KeyStoreAdmin(admin.ModelAdmin):
 class AccountAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'typ')
     search_fields = ('name',)
+
+
+@admin.register(Budget)
+class BudgetnAdmin(admin.ModelAdmin):
+    list_display = (
+        'id',
+        'amount',
+        'title',
+        'category',        
+        'date',
+        'created_at',
+        'updated_at',
+    )
+    list_filter = ('category', 'date', 'created_at', 'updated_at')
+    date_hierarchy = 'created_at'

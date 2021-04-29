@@ -31,16 +31,18 @@
               </h3>  
             </div>
             <div class="card-body em-text">
+                <span><strong>Budget:</strong> {{ budget|floatformat|intcomma }}</span><br/>
+                <span><strong>Current Month Expense:</strong> {{ current_month_expense|floatformat|intcomma }} ({{ budget_difference }})</span><br/>                
                 <span><strong>Transactions of</strong>: <span class="badge badge-secondary" style="font-size: 17px;">{{ selected_range  }}</span></span><br/>                                
                 <hr/>
                 {% for entry in spendings %}
                   <div class="mt-2">
-                    <a style="color: black;" href="{% url 'em:category-detail' pk=entry.category.pk %}?ref_dt={{ref_dt}}">
-                      <i class="{{ entry.category.icon }}"></i> {{ entry.category.name }}:
+                    <a style="color: black;" href="{% url 'em:category-detail' pk=entry.category %}?ref_dt={{ref_dt}}">
+                      <i class="{{ entry.category.icon }}"></i> {{ entry.category__name }}:
                     </a>
-                    {{ entry.percentage }}%(<i class="las la-rupee-sign"></i><span class="amount-in-table" style="font-size: 15px;">{{ entry.spendings|floatformat|intcomma }}</span>)</span>                    
+                    {% widthratio entry.spendings total_expense 100 %}%(<i class="las la-rupee-sign"></i><span class="amount-in-table" style="font-size: 15px;">{{ entry.spendings|floatformat|intcomma }}</span>)</span>                    
                     <div class="progress mt-1" style="height: 4px;">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ entry.percentage }}%" aria-valuenow="{{ entry.percentage }}" aria-valuemin="0" aria-valuemax="100" ></div>                        
+                        <div class="progress-bar bg-info" role="progressbar" style="width: {% widthratio entry.spendings total_expense 100 %}%" aria-valuenow="{% widthratio entry.spendings total_expense 100 %}" aria-valuemin="0" aria-valuemax="100" ></div>                        
                     </div>                                        
                   </div>
 
@@ -110,7 +112,7 @@
       {% with item_name="pie_chart" %}    
       {% with chart_type="doughnut" %}
       {% with data=cat_data %}        
-      {% with label=cat_label %}      
+      {% with label=cat_labels %}      
       {% with chart_title="Spendings by Category" %}        
       {% include "em/chart/daily-spendings.html" %}
       {% endwith %}

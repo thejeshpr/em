@@ -4,6 +4,7 @@ from . import views
 from . import views_keystore
 from . import views_transaction
 from . import views_account
+from . import views_budget
 
 
 app_name = 'em'
@@ -34,6 +35,13 @@ urlpatterns = [
     path('key-store/<int:pk>', views_keystore.KSDetailView.as_view(), name='keystore-detail'),
     path('key-store/<int:pk>/update', views_keystore.KSUpdateView.as_view(), name='keystore-update'),
     path('key-store/<int:pk>/delete', views_keystore.KSDeleteView.as_view(), name='keystore-delete'),
+
+    path('budget', views_budget.BudgetListView.as_view(), name='budget-list'),
+    path('budget/add', views_budget.BudgetCreateView.as_view(), name='budget-add'),
+    path('budget/<int:pk>', views_budget.BudgetDetailView.as_view(), name='budget-detail'),
+    path('budget/<int:pk>/update', views_budget.BudgetUpdateView.as_view(), name='budget-update'),
+    path('budget/<int:pk>/delete', views_budget.BudgetDeleteView.as_view(), name='budget-delete'),
+
 
     path('test', views.test, name='test'),
     path('test-download', views_account.file_download, name="test-download"),

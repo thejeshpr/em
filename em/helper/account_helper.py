@@ -16,22 +16,30 @@ class AccountHelper(object):
         spendings = list()
         account_labels = list()
         account_values = list()
+        # print(Transaction.objects.filter(date=date.today()).annotate(Sum('amount'))) #.aggregate(expense=Sum('amount')).get('expense'))
+        # print(Transaction.objects.values('account__name', 'account').filter(date=date.today()).annotate(Sum('amount'))) #.aggregate(expense=Sum('amount')).get('expense'))
+        spendings = Transaction.objects.values('account__name', 'account').filter(**filters).annotate(spendings=Sum('amount'))
 
-        if overall_expns:
-            for account in Account.objects.all():
-                amount = Transaction.objects\
-                            .filter(account=account, **filters)\
-                            .aggregate(amount=Sum('amount')).get('amount')
-
-                if amount:
-                    spendings.append({
-                        'account': account,
-                        'spendings': amount,
-                        'percentage': int((amount / overall_expns) * 100)
-                    })
-                    account_labels.append(account.name)
-                    account_values.append(amount)
+        if spendings:
+            for spending in spendings:
+                account_labels.append(spending.get('account__name'))
+                account_values.append(spending.get('spendings'))        
         return spendings, account_labels, account_values
+        # if overall_expns:
+        #     for account in Account.objects.all():
+        #         amount = Transaction.objects\
+        #                     .filter(account=account, **filters)\
+        #                     .aggregate(amount=Sum('amount')).get('amount')
+
+        #         if amount:
+        #             spendings.append({
+        #                 'account': account,
+        #                 'spendings': amount,
+        #                 'percentage': int((amount / overall_expns) * 100)
+        #             })
+        #             account_labels.append(account.name)
+        #             account_values.append(amount)
+        # return spendings, account_labels, account_values
 
     @staticmethod
     def get_account_details(context: Dict[Any, Any], **kwargs):        
@@ -66,7 +74,7 @@ class AccountHelper(object):
                                 .filter(account=account, **filters)\
                                     .aggregate(spendings=Sum('amount'))\
                                         .get('spendings')   
-        context['transactions'] = Transaction.objects.filter(account=account, **filters).order_by("-date")
+        context['transactions'] = Transaction.objects.filter(account=account, **filters).order_by("-date")        
         return context        
 
     @staticmethod

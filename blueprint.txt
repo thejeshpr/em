@@ -1,0 +1,81 @@
+/
+- expense
+- income
+- spendings by category 
+- transactions
+- budget
+
+/transaction/filter
+- filter by date
+- show chart for selected date
+
+
+/category/<id>
+- details
+- transactions
+- filter
+
+/budget
+- budget grouped by month
+- planned and difference
+
+
+/budget/id
+- budget lists
+- category spread
+- transactions
+
+
+/month
+- transaction total amount by month
+
+/month/<dt-month>
+- transactions
+- budget
+- category
+
+
+/account
+- if account type is credit
+    get current billing details
+  else
+    get total spending 
+
+/account/id
+- details by default unbilled or current month
+
+
+/statement/transactions - current month with filter
+/statement/account - current month or by statements with filter
+/statement/budget - 
+/statement/category - 
+
+
+=================== Models ===================
+
+Budget:
+    - title
+    - amount
+    - month
+    - category
+    - account
+
+transactions:
+    - title
+    - amount
+    - date
+    - desc
+    - account
+    - category
+
+
+category
+    - icon
+    - name
+
+account:
+    - name
+    - type
+    - icon
+    - statement-date
+

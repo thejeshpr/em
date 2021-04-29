@@ -96,3 +96,23 @@ class KeyStore(models.Model):
         return reverse('em:keystore-list')
 
 
+
+class Budget(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    account = models.ForeignKey('Account', related_name='budgets', on_delete=models.SET_NULL, blank=True, null=True)
+    amount = models.FloatField()        
+    category = models.ForeignKey('Category', on_delete=models.CASCADE, related_name="budgets")
+    date = models.DateField(auto_now=False, auto_now_add=False)        
+    title = models.CharField(max_length=200,unique_for_date='date')
+
+    def __str__(self):
+        return self.title
+
+    def __repr__(self):
+        return f'<Budget: {self.title}>'
+
+    def get_absolute_url(self):        
+        return reverse('em:budget-detail', kwargs=dict(pk=self.pk))
+
