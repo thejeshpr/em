@@ -62,8 +62,10 @@ class Helper(object):
                                                 date__year=date.today().year
                                             ).aggregate(expense=Sum('amount'))\
                                                 .get('expense')
-
-        context['budget_difference'] = context['budget'] - context['current_month_expense']
+        if context['budget'] and context['current_month_expense']:
+            context['budget_difference'] = context['budget'] - context['current_month_expense']
+        else:
+            context['budget_difference'] = 0
 
 
         context['transactions'], context['total_expense'] = TransactionHelper.get_transactions(**filters)        
