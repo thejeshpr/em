@@ -4,11 +4,9 @@
 
 {% block content %}
 <div>
-    <div class="card">
-        <div class="card-header">
-            <h3>Create New Transaction</h3>
-        </div>
+    <div class="card em-fg em-text">
         <div class="card-body">
+            <h3 class="card-title">Create New Transaction</h3>
             <form method="post" novalidate>
                 {% csrf_token %}
                 {{ form|crispy }}

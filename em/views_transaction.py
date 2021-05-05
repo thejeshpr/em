@@ -18,12 +18,6 @@ from django.db.models import Avg, Count, Min, Sum
 from .models import Transaction
 
 
-# class TransactionDayView(generic.ListView):
-#     model = Transaction
-#     template_name = ''
-#     context_object_name = 'transactions'
-
-#     def get_context_data()
 
 @login_required(login_url='/login/')
 def transactions_day_view(request):    

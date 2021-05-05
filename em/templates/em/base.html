@@ -32,7 +32,7 @@
   <!-- Fengyuan Chen's Datepicker -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js" integrity="sha256-/7FLTdzP6CfC1VBAj/rsp3Rinuuu9leMRGd354hvk0k=" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">    
     <style>      
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -72,19 +72,13 @@
         font-family: 'Roboto Mono', monospace;
       }
 
-      .table-responsive {
-         display: table;
-      }
-
-      .em-text {
-        font-family: 'Montserrat', sans-serif;          
-      }
+            
 
     </style>
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.3/examples/starter-template/starter-template.css" rel="stylesheet">
   </head>
-  <body>
+  <body class="em-bg">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="/"><i class="las la-file-invoice-dollar"></i> EM</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +121,7 @@
   {% endblock%}
 
 </main><!-- /.container -->
-</body>
+</body class="em-bg">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </html>

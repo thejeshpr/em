@@ -18,16 +18,18 @@ from django.utils.decorators import method_decorator
 
 from django.db.models import Avg, Count, Min, Sum
 
-from .helper import Helper
+from .helper import Helper, CategoryHelper
 
 from pprint import pprint
 
 
 
 from .models import (
-    Category,    
+    Account,
+    Budget,
+    Category,
     Transaction
-    )
+)
 
 from .forms import CategoryForm, TransactionForm
 
@@ -35,25 +37,18 @@ from .forms import CategoryForm, TransactionForm
 class Home(generic.ListView):
     model = Transaction
     context_object_name = 'transactions'
-    template_name = 'em/index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # context['additional_info'] = helper.get_home_page_data()
-        return context
+    template_name = 'em/index.html'    
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class CategoryCreateView(edit.CreateView):
     model = Category
     form_class = CategoryForm
-    template_name = 'em/category-create.html'
+    template_name = 'em/category/create.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['page'] = 'car-add'
-        # context['title'] = 'Add new car'
-        # context['heading'] = 'Add new car'
+        context['card_title'] = "Create Category"
         return context
 
 
@@ -61,10 +56,11 @@ class CategoryCreateView(edit.CreateView):
 class CategoryUpdateView(edit.UpdateView):
     model = Category
     form_class = CategoryForm
-    template_name = 'em/category-create.html'
+    template_name = 'em/category/create.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)        
+        context = super().get_context_data(**kwargs)
+        context['card_title'] = "Update Category"
         return context
 
 
@@ -79,81 +75,46 @@ class CategoryDeleteView(edit.DeleteView):
 class CategoryDetailView(generic.DetailView):
     model = Category
     context_object_name = 'category'
-    template_name = 'em/category-details.html'
+    template_name = 'em/category/details.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)        
-        obj = kwargs.get('object')
-        ref_dt = self.request.GET.get("ref_dt")
-        date_fmt = "%Y-%m-%d"
-        
-        if ref_dt:
-            ref_dt = datetime.strptime(ref_dt, date_fmt)
-            context['transactions'] = obj.transactions.filter(date=ref_dt)
-            context['ttl_amt'] = obj.transactions.filter(date=ref_dt).aggregate(ttl_amt=Sum('amount')).get('ttl_amt')
-            print(context)
-        else:
-            context['transactions'] = obj.transactions.all()
-            context['ttl_amt'] = obj.transactions.all().aggregate(ttl_amt=Sum('amount')).get('ttl_amt')
-        return context
+        context = super().get_context_data(**kwargs)
+        ref_dt = self.request.GET.get('ref_dt')        
+        return CategoryHelper.get_transactions(context, ref_dt=ref_dt)
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class CategoryListView(generic.ListView):
     model = Category
     context_object_name = "categories"
-    template_name = 'em/category-list.html'
+    template_name = 'em/category/list.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        spending = list()
-
-        for category in Category.objects.all():
-            overall_amt = Transaction.objects\
-                        .aggregate(amount=Sum('amount')).get('amount')
-            amount = Transaction.objects\
-                        .filter(category=category)\
-                        .aggregate(amount=Sum('amount')).get('amount')
-
-            if amount:            
-                spending.append({
-                        'category': category,
-                        'total_amt': amount,
-                        'overall_amt': overall_amt,
-                        'percentage_share': int((amount / overall_amt) * 100)                        
-                    })
-
-        context['categories'] = spending        
+        context = super().get_context_data(**kwargs)  
+        context['overall_expense'] = Transaction.objects.aggregate(spendings=Sum('amount')).get('spendings')
         return context
+
+    def get_queryset(self, **kwargs):
+        fields = [
+            'category__name',
+            'category',
+            'category__icon'            
+        ]
+        return Transaction.objects.values(*fields).annotate(spendings=Sum('amount')).all()
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class TransactionCreateView(edit.CreateView):
     model = Transaction
     form_class = TransactionForm
-    template_name = 'em/transaction-create.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # context['page'] = 'car-add'
-        # context['title'] = 'Add new car'
-        # context['heading'] = 'Add new car'
-        return context
+    template_name = 'em/transaction/create.html'    
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
 class TransactionUpdateView(edit.UpdateView):
     model = Transaction
     form_class = TransactionForm
-    template_name = 'em/transaction-create.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # context['page'] = 'car-add'
-        # context['title'] = 'Add new car'
-        # context['heading'] = 'Add new car'
-        return context
+    template_name = 'em/transaction/create.html'    
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
@@ -167,7 +128,7 @@ class TransactionDeleteView(edit.DeleteView):
 class TrasactionDetailView(generic.DetailView):
     model = Transaction
     context_object_name = 'transaction'
-    template_name = 'em/transaction_details.html'
+    template_name = 'em/transaction/details.html'
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
@@ -186,98 +147,11 @@ def dashboard(request):
         from_dt=request.GET.get('fromDate'),
         to_dt=request.GET.get('toDate'),
     )
-
-    # context = TransactionHelper.get_spending(**payload)
+    
     context = Helper.get_data(**payload)
-    # pprint(context)
     return render(request, 'em/dashboard.html', context=context)
 
         
-
-
-class TransactionHelper(object):
-    date_fmt = "%Y-%m-%d"
-
-    @staticmethod
-    def get_range(days):
-        tdy_dt, ystr_dt = date.today(), date.today() - timedelta(days=days)    
-
-        return [
-            ystr_dt.strftime(TransactionHelper.date_fmt),
-            tdy_dt.strftime(TransactionHelper.date_fmt)
-        ]        
-
-    @staticmethod
-    def get_daily_spending():
-        today_dt = date.today()        
-        labels = []
-        data = []
-        for i in reversed(range(7)):
-            dt = today_dt - relativedelta.relativedelta(days=i)
-            labels.append(dt.strftime('%d-%b'))
-            data.append(Transaction.objects.filter(date=dt).aggregate(expense=Sum('amount')).get('expense') or 0)            
-        return labels, data
-
-    @staticmethod
-    def get_spending(**kwargs):
-        context = {}
-        spending = list()
-        filters = dict(tran_type='EX')
-
-        ref_dt = datetime.strptime(kwargs.get('ref_dt'), TransactionHelper.date_fmt) if kwargs.get('ref_dt') else date.today()
-
-        if kwargs.get('last_n_days'):            
-            filters.update(date__range = TransactionHelper.get_range(int(kwargs.get('last_n_days'))))
-            context['selected_range'] = f"Last {kwargs.get('last_n_days')} days"            
-
-        elif kwargs.get('from_dt') and kwargs.get('to_dt'):
-            from_dt, to_dt = (
-                datetime.strptime(kwargs.get('from_dt'), TransactionHelper.date_fmt),
-                datetime.strptime(kwargs.get('to_dt'), TransactionHelper.date_fmt)
-            )
-            filters.update(date__range = [from_dt, to_dt])
-            context['selected_range'] = f"{kwargs.get('from_dt')} - {kwargs.get('to_dt')}"
-
-        elif kwargs.get('ref_dt'):            
-            filters.update(date=ref_dt)
-            context['selected_range'] = kwargs.get('ref_dt')                 
-
-        else:
-            filters.update(date=date.today())
-            context['selected_range'] = "Today"
-
-        context['transactions'] = Transaction.objects.filter(**filters).order_by('-date', '-pk')
-        context['delta'] = kwargs.get("delta")
-        context['ref_dt'] = datetime.strftime(ref_dt, TransactionHelper.date_fmt)
-        context['prev'] = ref_dt - relativedelta.relativedelta(days=1)
-        context['next'] = ref_dt + relativedelta.relativedelta(days=1)
-
-        overall_expns = Transaction.objects.filter(**filters)\
-                            .aggregate(expense=Sum('amount'))\
-                            .get('expense')        
-        cat_names = []
-        cat_amts = []
-        for category in Category.objects.all():
-            amount = Transaction.objects\
-                        .filter(category=category, **filters)\
-                        .aggregate(amount=Sum('amount')).get('amount')
-
-            if amount:            
-                spending.append({
-                        'category': category,
-                        'total_amt': amount,
-                        'percentage': int((amount / overall_expns) * 100)                        
-                    })
-                cat_names.append(category.name)
-                cat_amts.append(amount)
-        
-        context['spendings'] = spending
-        context['total_expense'] = overall_expns
-        
-        context["tran_label"], context["tran_data"] = TransactionHelper.get_daily_spending()
-        context['cat_label'], context['cat_data'] = cat_names, cat_amts
-        # print(context['cat_label'], context['cat_data'])
-        return context
 
         
 @login_required(login_url='/login/')

@@ -5,8 +5,7 @@ from .models import (
     Account,
     Budget,
     Category,
-    Transaction,
-    KeyStore    
+    Transaction    
 )
 
 
@@ -32,15 +31,10 @@ class TransactionAdmin(admin.ModelAdmin):
     date_hierarchy = 'created_at'
 
 
-@admin.register(KeyStore)
-class KeyStoreAdmin(admin.ModelAdmin):
-    list_display = ('id', 'key', 'value')
-    search_fields = ('key',)
-
 
 @admin.register(Account)
 class AccountAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'typ')
+    list_display = ('id', 'name', 'act_type')
     search_fields = ('name',)
 
 

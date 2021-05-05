@@ -50,18 +50,17 @@ class AccountListView(generic.ListView):
     template_name = 'em/account/list.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        data = list()
-        for act in context.get('accounts'):
-            spendings = Transaction.objects.filter(account=act)\
-                            .aggregate(spendings=Sum('amount'))\
-                                .get('spendings')        
-            data.append({
-                "account": act,
-                "spendings": spendings
-            })
-        context['data'] = data
-        return context
+        context = super().get_context_data(**kwargs)          
+        return context     
+
+    def get_queryset(self, **kwargs):
+        fields = [
+            'account__name',
+            'account',
+            'account__icon',
+            'account__act_type'
+        ]
+        return Transaction.objects.values(*fields).annotate(spendings=Sum('amount')).all()
 
 
 @method_decorator(login_required(login_url='/login/'), name='dispatch')
@@ -71,8 +70,9 @@ class AccountDetailView(generic.DetailView):
     template_name = 'em/account/details.html'
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)      
-        context["statements"] = AccountHelper.get_act_statments(context["account"].name)
+        context = super().get_context_data(**kwargs)              
+        context["statements"] = AccountHelper.get_act_statments(context["account"])
+        
         return AccountHelper.get_account_details(            
             context=context,
             ref_month=self.request.GET.get('ref_month'),
@@ -85,21 +85,8 @@ class AccountDetailView(generic.DetailView):
 class AccountUpdateView(edit.UpdateView):
     model = Account
     form_class = AccountForm
-    template_name = 'em/account/edit.html'    
+    template_name = 'em/account/update.html'    
 
-
-# @method_decorator(login_required(login_url='/login/'), name='dispatch')
-# class KSDeleteView(edit.DeleteView):
-#     model = KeyStore    
-#     template_name = 'em/delete-confirm.html'
-#     success_url = reverse_lazy('em:keystore-list')
-
-
-# @method_decorator(login_required(login_url='/login/'), name='dispatch')
-# class KSListView(generic.ListView):
-#     model = KeyStore    
-#     template_name = "em/key-store_list.html"
-#     context_object_name = "keystores"
 
 @login_required(login_url='/login/')
 def file_download(request):

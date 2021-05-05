@@ -79,3 +79,8 @@ account:
     - icon
     - statement-date
 
+
+
+
+=====================================
+budget percentage with seprate card

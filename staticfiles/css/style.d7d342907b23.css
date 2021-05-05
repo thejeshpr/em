@@ -1,0 +1,83 @@
+.em-bg {
+    background: #282828;
+    border-color: #282828;
+}
+
+.em-fg {
+    background-color: #363636;
+    border-color: #363636;
+}
+
+.em-text {
+    font-family: 'Montserrat', sans-serif;          
+    color: white;
+}
+
+.em-chart-box {
+    padding: 0px;
+    box-sizing:unset;
+    border: 0px;
+}
+
+.em-center-align {
+    text-align: center;
+}
+
+.em-transaction-title {
+    color: gray;
+}
+
+.em-secondary {
+    color:gray;
+}
+
+
+.table-responsive {
+    display: table;
+ }
+
+
+ .em-amount {
+    font-family: 'Roboto Mono', monospace;    
+    font-size: 18px;
+  }
+
+.em-expense {
+    color: red;
+}
+
+.em-input {
+    border:0px;
+    background:#282828;
+    color:white;
+}
+
+.textinput {
+    border:0px;
+    background:#282828;
+    color:white;
+}
+
+.numberinput {
+    border:0px;
+    background:#282828;
+    color:white;
+}
+
+.select {
+    border:0px;
+    background:#282828;
+    color:white;
+}
+
+.dateinput {
+    border:0px;
+    background:#282828;
+    color:white;
+}
+
+.textarea {
+    border:0px;
+    background:#282828;
+    color:white;
+}

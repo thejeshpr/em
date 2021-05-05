@@ -4,7 +4,12 @@ from django import forms
 from django.forms import ModelForm
 from django.utils import timezone
 
-from .models import Budget, Category, Transaction, KeyStore, Account
+from .models import (
+    Account,
+    Budget,
+    Category,
+    Transaction    
+)
 
 class CategoryForm(ModelForm):    
     class Meta:
@@ -12,7 +17,10 @@ class CategoryForm(ModelForm):
         fields = [
             'name',
             'icon'
-        ]        
+        ]
+
+    # name = forms.CharField(widget=forms.TextInput(attrs={'class': 'em-input'}))
+    # icon = forms.CharField(widget=forms.TextInput(attrs={'class': 'em-input'}))
 
 
 class TransactionForm(ModelForm):    
@@ -31,18 +39,9 @@ class TransactionForm(ModelForm):
     date = forms.DateField(
         # input_formats=['%d/%m/%Y'],
         initial=datetime.date.today
-    )        
+    )
+    # title = forms.CharField(widget=forms.TextInput(attrs={'class': 'em-input'}))
     desc = forms.CharField(required=False)
-
-        
-
-class KeyStoreForm(ModelForm):    
-    class Meta:
-        model = KeyStore
-        fields = [
-            'key',
-            'value'
-        ]   
 
 
 class AccountForm(ModelForm):
@@ -51,8 +50,8 @@ class AccountForm(ModelForm):
         fields = [
             'name',
             'icon',            
-            'typ',
-            # 'statement_date',
+            'act_type',
+            'statement_date',
         ]
 
     # statement_date = forms.DateField(

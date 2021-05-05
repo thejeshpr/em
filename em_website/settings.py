@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django_extensions',
     'crispy_forms',
-    'rest_framework',
+    'rest_framework',    
     'em',
 ]
 

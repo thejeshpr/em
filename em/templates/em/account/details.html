@@ -4,27 +4,26 @@
 
 {% block content %}
 <div>
-    <div class="card">
-        <div class="card-header">
-            <h3>
-                <i class="{{ account.icon }}"></i> {{ account.name }}                
-            </h3>            
-        </div>
+    <div class="card em-fg em-text">        
         <div class="card-body">
-            <div class="em-text">
-                <span><strong>Name</strong>: {{ account.name }}</span><br/>
-                <span><strong>Type</strong>: {{ account.typ }}</span><br/>
-                <span><strong>Statement Date</strong>: {{ account.statement_date }}</span><br/>
-                <span><strong>Total Amuont</strong>: {% firstof spendings "0.0" %}</span><br/>
-                <span><strong>Month</strong>: {{ cur_month|date:'m-Y' }}</span><br/>                
-            </div>            
+            <div class="card-title">
+                <h3>
+                    <i class="{{ account.icon }}"></i> {{ account.name }}                
+                </h3>            
+            </div>
+            <span class="em-secondary">Name: {{ account.name }}</span><br/>
+            <span class="em-secondary">Type: {{ account.act_type }}</span><br/>
+            <span class="em-secondary">Statement date: {{ account.statement_date }}</span><br/>
+            <span class="em-secondary">Total Amount: {% firstof spendings "0.0" %}</span><br/>
+            <span class="em-secondary">Month: {{ cur_month|date:'m-Y' }}</span><br/>
+            
             <hr/>
             <a href="{% url 'em:account-update' pk=account.pk %}" class="btn btn-sm btn-primary">Edit</a>
             <a href="#" class="btn btn-sm btn-danger">Delete</a>            
             <div class="float-right">
-                <a href="?ref_month={{ prev_month|date:'m-Y' }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-left"></i>{{ prev_month|date:'m-Y' }}</a>                  
-                <a href="{% url 'em:account-detail' account.pk %}" class="btn btn-sm btn-dark"><i class="las la-calendar-day"></i></a>  
-                <a href="?ref_month={{ next_month|date:'m-Y' }}" class="btn btn-sm btn-dark">{{ next_month|date:'m-Y' }}<i class="las la-angle-double-right"></i></a> 
+                <a href="?ref_month={{ prev_month|date:'m-Y' }}" class="btn btn-sm btn-primary"><i class="las la-angle-double-left"></i>{{ prev_month|date:'m-Y' }}</a>                  
+                <a href="{% url 'em:account-detail' account.pk %}" class="btn btn-sm btn-primary"><i class="las la-calendar-day"></i></a>  
+                <a href="?ref_month={{ next_month|date:'m-Y' }}" class="btn btn-sm btn-primary">{{ next_month|date:'m-Y' }}<i class="las la-angle-double-right"></i></a> 
             </div>
             <br/>
             <br/>
@@ -38,7 +37,7 @@
             <br/>
             <div>
                 {% with transactions=transactions %}
-                {% include "em/transactions_list_sub.html" %}
+                {% include "em/transaction/list.html" %}
                 {% endwith %}
             </div>
         </div>        

@@ -15,50 +15,30 @@
     
 </style>
 
+{% include "em/others/cards.html" %}
 
 
-
-<div class="row">
+<div class="row mt-2">
     <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-              <h3 style="display: inline-block;"><i class="las la-chart-pie"></i> Spendings
-                {% if total_expense %}
-                  <span class="amount-in-table" style="color: red; font-size: 20px;">-<i class="las la-rupee-sign"></i>{{ total_expense|floatformat|intcomma }}</span>
-                {% else %}
-                <span class="amount-in-table"><i class="las la-rupee-sign"></i>0</span>
-                {% endif %}
-              </h3>  
-            </div>
+        <div class="card em-fg">            
             <div class="card-body em-text">
-                <span><strong>Budget:</strong> {{ budget|floatformat|intcomma }}</span><br/>
-                <span><strong>Current Month Expense:</strong> {{ current_month_expense|floatformat|intcomma }} ({{ budget_difference }})</span><br/>                
-                <span><strong>Transactions of</strong>: <span class="badge badge-secondary" style="font-size: 17px;">{{ selected_range  }}</span></span><br/>                                
-                <hr/>
-                {% for entry in spendings %}
-                  <div class="mt-2">
-                    <a style="color: black;" href="{% url 'em:category-detail' pk=entry.category %}?ref_dt={{ref_dt}}">
-                      <i class="{{ entry.category.icon }}"></i> {{ entry.category__name }}:
-                    </a>
-                    {% widthratio entry.spendings total_expense 100 %}%(<i class="las la-rupee-sign"></i><span class="amount-in-table" style="font-size: 15px;">{{ entry.spendings|floatformat|intcomma }}</span>)</span>                    
-                    <div class="progress mt-1" style="height: 4px;">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: {% widthratio entry.spendings total_expense 100 %}%" aria-valuenow="{% widthratio entry.spendings total_expense 100 %}" aria-valuemin="0" aria-valuemax="100" ></div>                        
-                    </div>                                        
-                  </div>
-
+              <h3 class="card-title" style="display: inline-block;"><i class="las la-chart-pie"></i> Spendings</h3>                                  
+                
+                {% for entry in spendings %}                  
+                  {% include "em/others/progress_bar.html" %}
                 {% empty %}
                   <div style="text-align: center;">
                     No Transactions
                   </div>
                 {% endfor %}
-
             </div>
             <div class="card-footer">
+              <span class="badge badge-secondary" style="font-size: 17px;">{{ selected_range  }}</span>
                 <div class="float-right">                                    
-                    <a href="{% url 'em:home' %}?last_n_days=7" class="btn btn-dark btn-sm"><i class="las la-calendar-week"></i> 7d</a>              
-                    <a href="{% url 'em:home' %}?last_n_days=30" class="btn btn-dark btn-sm"><i class="las la-calendar-alt"></i> 30d</a>              
+                    <a href="{% url 'em:home' %}?last_n_days=7" class="btn btn-primary btn-sm"><i class="las la-calendar-week"></i> 7d</a>              
+                    <a href="{% url 'em:home' %}?last_n_days=30" class="btn btn-primary btn-sm"><i class="las la-calendar-alt"></i> 30d</a>              
 
-                    <a class="btn btn-sm btn-dark" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="las la-filter"></i></a>
+                    <a class="btn btn-sm btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"><i class="las la-filter"></i></a>
                       <div class="collapse mt-2 mb-2" id="collapseExample">
                         <div class="card card-body"> 
 
@@ -81,8 +61,8 @@
                         </div>
                       </div>
                     
-                      <a href="{% url 'em:home' %}?ref_dt={{ prev|date:'Y-m-d' }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-left"></i></a>  
-                    <a href="{% url 'em:home' %}?ref_dt={{ next|date:'Y-m-d' }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-right"></i></a>              
+                      <a href="{% url 'em:home' %}?ref_dt={{ prev|date:'Y-m-d' }}" class="btn btn-sm btn-primary"><i class="las la-angle-double-left"></i></a>  
+                    <a href="{% url 'em:home' %}?ref_dt={{ next|date:'Y-m-d' }}" class="btn btn-sm btn-primary"><i class="las la-angle-double-right"></i></a>              
                 </div>
               </div>
         </div>
@@ -90,69 +70,38 @@
     </div>
 
 </div>
-
+{% include "em/others/chart_js.html" %}
 <div class="row mt-1">
   <div class="col-md-4 mt-1">
-    <div class="card p-1">
-      {% with item_name="bar_chart" %} 
-      {% with chart_type="line" %}        
-      {% with data=tran_data %}        
-      {% with label=tran_label %}        
-      {% with chart_title="Spendings by Date" %}        
-      {% include "em/chart/daily-spendings.html" %}
-      {% endwith %}
-      {% endwith %}
-      {% endwith %}
-      {% endwith %}
-      {% endwith %}
+    <div class="card em-fg">
+      {% include "em/chart/transactions_chart.html" %}
     </div>    
   </div>  
+
   <div class="col-md-4 mt-1">
-    <div class="card p-1">
-      {% with item_name="pie_chart" %}    
-      {% with chart_type="doughnut" %}
-      {% with data=cat_data %}        
-      {% with label=cat_labels %}      
-      {% with chart_title="Spendings by Category" %}        
-      {% include "em/chart/daily-spendings.html" %}
-      {% endwith %}
-      {% endwith %}
-      {% endwith %}
-      {% endwith %}
-      {% endwith %}
+    <div class="card p-1 em-fg">
+      {% include "em/chart/category_chart.html" %}
     </div>    
   </div>
   <div class="col-md-4 mt-1">
-    <div class="card p-1">
-      {% with item_name="account_chart" %}    
-      {% with chart_type="pie" %}
-      {% with data=account_data %}        
-      {% with label=account_label %}      
-      {% with chart_title="Spendings by Category" %}        
-      {% include "em/chart/daily-spendings.html" %}
-      {% endwith %}
-      {% endwith %}
-      {% endwith %}
-      {% endwith %}
-      {% endwith %}
+    <div class="card p-1 em-fg">
+      {% include "em/chart/account_chart.html" %}
     </div>    
   </div>
 </div>
 
 
-<div class="row mt-2">
+<div class="row mt-2 em-text">
   <div class="col-md-12">
 
-      <div class="card">  
+      <div class="card em-fg">  
           <div class="card-header">
             <h3 style="display: inline-block;"><i class="las la-file-invoice-dollar"></i> Transactions</h3>
-            <a href="{% url 'em:transaction-add' %}" class="btn btn-sm btn-success float-right mt-1"><i class="las la-plus"></i> Transaction</a>                                    
+            <a href="{% url 'em:transaction-add' %}" class="btn btn-sm btn-success float-right mt-1"><i class="las la-plus"></i> Transaction</a>
           </div>        
         <div class="card-body">
-            <div>
-              
-              {% include "em/transactions_list_sub.html" %}
-
+            <div>              
+              {% include "em/transaction/list.html" %}
             </div>
         </div>
       </div>

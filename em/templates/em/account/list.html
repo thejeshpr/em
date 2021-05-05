@@ -1,47 +1,43 @@
 {% extends 'em/base.html' %}
 
 {% load crispy_forms_tags %}
-
+{% load humanize %}
 {% block content %}
 <div>
 
-    <div class="card mt-2">
-        <div class="card-header">
-            <div class="float-left"><h3><i class="{{ category.icon }}"></i> Accounts</h3></div>                        
-        </div>
+    <div class="card mt-2 em-fg em-text">        
         <div class="card-body">
-            
-            <table class="table table-responsive">
-                <thead>
-                  <tr>                    
-                    <th scope="col">Name</th>                    
-                    <th scope="col">Type</th>                               
-                    <th scope="col">Total Spendings</th>                               
-                  </tr>
-                </thead>
-                <tbody>
-                    {% for entry in data %}
-                    <tr>                        
-                        <th scope="row">
-                            <a href="{% url 'em:account-detail' entry.account.pk %}">
-                                #{{ entry.account.pk }} - <i class="{{ entry.account.icon }}"></i>{{ entry.account.name }} 
-                            </a>
-                        </th>                        
-                        <td>
-                            {% if entry.account.typ == "S" %}
-                                SAVINGS
-                            {% else %}
-                                CREDIT
-                            {% endif %}
-                        </td>
-                        <td>
-                            {{ entry.spendings|floatformat }}
-                        </td>
-                    </tr>     
-                    {% endfor %}                               
-                </tbody>
-              </table>
-                       
+
+            <h3 class="card-title"><i class="{{ category.icon }}"></i> Accounts</h3>
+            {% for account in accounts %}
+                <div class="card em-bg em-text mt-1">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-11 col-sm-11 col-xs-11">
+                                <h4 class="card-title">
+                                    <a href="{% url 'em:account-detail' account.account %}" class="em-text">
+                                        #{{ account.account }} - <i class="{{ account.account__icon }}"></i>{{ account.account__name }} 
+                                    </a>
+                                </h4>
+                                <span class="secondary" style="color:gray;">
+                                    Type: {{ account.account__act_type }}
+                                </span><br/>
+                                <span class="secondary" style="color:gray;">
+                                    Spendings: {{ account.spendings|floatformat|intcomma }}
+                                </span>
+                            </div>                            
+                            <div class="col-md-1 col-sm-1 col-xs-1">
+                                {% if account.account__act_type == 'credit' %}
+                                    <div class="float-right" style="background-color: red; width: 5px; height: 80px;"></div>
+                                {% else %}
+                                    <div class="float-right" style="background-color: green; width: 5px; height: 80px;"></div>
+                                {% endif %}
+                            </div>
+                        </div>                                                
+                    </div>
+                </div>
+            {% endfor %}
+                        
         </div>        
     </div>       
 </div>

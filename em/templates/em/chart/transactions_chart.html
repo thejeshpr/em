@@ -1,17 +1,15 @@
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.0/dist/chart.min.js"></script>
-<canvas class="em-fg" id="{{ item_name }}" width="400" height="400" style="background-color: #363636;"></canvas>
+<canvas class="em-fg" id="transactions_chart" width="400" height="400" style="background-color: #363636;"></canvas>
 <script>
-var ctx = document.getElementById('{{ item_name }}').getContext('2d');
+var ctx = document.getElementById('transactions_chart').getContext('2d');
 var myChart = new Chart(ctx, {
-    type: '{{ chart_type }}',    
+    type: 'line',    
     data: {
-        labels: {% autoescape off %} {{ label }} {% endautoescape %},
+        labels: {% autoescape off %} {{ tran_labels }} {% endautoescape %},
         datasets: [{
-            label: '{{ chart_title }}',
-            data: {{ data }},
+            label: 'Spendings by Date',
+            data: {{ tran_values }},
             // pointStyle: 'triangle',
-            fill: true,
-            color: 'rgba(255, 99, 132, 0.6)',
+            fill: true,            
             backgroundColor: [
                 'rgba(255, 99, 132, 0.6)',
                 'rgba(54, 162, 235, 0.6)',
@@ -32,7 +30,7 @@ var myChart = new Chart(ctx, {
                 'rgba(103, 192, 205, 1)',
                 'rgba(255, 159, 64, 1)'
             ],
-            borderWidth: 3
+            borderWidth: 0.5
         }]
     },
     options: {
@@ -46,7 +44,7 @@ var myChart = new Chart(ctx, {
             },
             title: {
                 display: true,
-                text: '{{ chart_title }}',
+                text: 'Spendings by Date',
                 color: 'rgba(153, 102, 255, 0.6)',
             }            
         },

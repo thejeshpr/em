@@ -5,49 +5,43 @@
 {% load humanize %}
 
 {% block content %}
-<br/>
-<br/>
+
 <div>
 
-    <div class="card mt-2">
+    <div class="card mt-2 em-fg em-text">
         <div class="card-header">
             <div class="float-left"><h3><i class="{{ category.icon }}"></i> Budget ( {{ total_budget|floatformat|intcomma }} )</h3></div>                        
+            <a href="{% url 'em:budget-add' %}" class="btn btn-sm btn-success float-right mt-1"><i class="las la-plus"></i> Budget</a>
         </div>
         <div class="card-body">
-            
-            <table class="table table-responsive">
-                <thead>
-                  <tr>                    
-                    <th scope="col">Name</th>                    
-                    <th scope="col">Type</th>                               
-                    <th scope="col">Amount</th>                               
-                  </tr>
-                </thead>
-                <tbody>
-                    {% for budget in budgets %}
-                    <tr>                        
-                        <th scope="row">
-                            <a href="#">
-                                #{{ budget.pk }} - {{ budget.title }} 
-                            </a>
-                        </th>                        
-                        <td>
-                            {{ budget.category }}
-                        </td>
-                        <td>
-                            {{ budget.amount|floatformat|intcomma }}
-                        </td>
-                    </tr>     
-                    {% endfor %}                               
-                </tbody>
-              </table>
+        
+        {% for budget in budgets %}
+        <div class="card em-bg mt-1">
+            <div class="card-body em-bg">
+              <div class="row">
+                <div class="col-sm-6 col-md-4">                        
+                  <div class="em-center-align amount-in-table" style="color: red;"><h1><i class="las la-rupee-sign"></i>{{ budget.amount|floatformat|intcomma }}</h1></div>
+                </div>
+                <div class="col-sm-6 col-md-8">
+                  <a href="{% url 'em:budget-detail' pk=budget.pk %}">
+                    <strong class="desc-in-table em-text">#{{ budget.id }} {{ budget.title }}</strong>            
+                  </a><br/>
+                  <a href="{% url 'em:category-detail' pk=budget.category.pk %}">
+                    <span class="secondary" style="color:gray;"><i class="{{ budget.category.icon }}"></i> {{ budget.category }}</span><br/>
+                </a> 
+                  <span class="secondary" style="color:gray;"><i class="las la-calendar"></i> {{ budget.date }}</span>
+                </div>      
+              </div>
+            </div>
+          </div>
+        {% endfor %}
                        
         </div>        
         <div class="card-footer">
             <div class="float-right">
-                <a href="?ref_month={{ prev_month|date:'m-Y' }}" class="btn btn-sm btn-dark"><i class="las la-angle-double-left"></i>{{ prev_month|date:'m-Y' }}</a>                  
-                <a href="{% url 'em:budget-list' %}" class="btn btn-sm btn-dark"><i class="las la-calendar-day"></i></a>  
-                <a href="?ref_month={{ next_month|date:'m-Y' }}" class="btn btn-sm btn-dark">{{ next_month|date:'m-Y' }}<i class="las la-angle-double-right"></i></a> 
+                <a href="?ref_month={{ prev_month|date:'m-Y' }}" class="btn btn-sm btn-primary"><i class="las la-angle-double-left"></i>{{ prev_month|date:'m-Y' }}</a>                  
+                <a href="{% url 'em:budget-list' %}" class="btn btn-sm btn-primary"><i class="las la-calendar-day"></i></a>  
+                <a href="?ref_month={{ next_month|date:'m-Y' }}" class="btn btn-sm btn-primary">{{ next_month|date:'m-Y' }}<i class="las la-angle-double-right"></i></a> 
             </div>
         </div>        
     </div>       

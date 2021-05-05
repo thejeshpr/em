@@ -1,7 +1,6 @@
 from django.urls import path
 
 from . import views
-from . import views_keystore
 from . import views_transaction
 from . import views_account
 from . import views_budget
@@ -27,14 +26,7 @@ urlpatterns = [
     path('account', views_account.AccountListView.as_view(), name='account-list'),
     path('account/add', views_account.AccountCreateView.as_view(), name='account-add'),
     path('account/<int:pk>', views_account.AccountDetailView.as_view(), name='account-detail'),
-    path('account/<int:pk>/update', views_account.AccountUpdateView.as_view(), name='account-update'),
-        
-
-    path('key-store', views_keystore.KSListView.as_view(), name='keystore-list'),
-    path('key-store/add', views_keystore.KSCreateView.as_view(), name='keystore-add'),
-    path('key-store/<int:pk>', views_keystore.KSDetailView.as_view(), name='keystore-detail'),
-    path('key-store/<int:pk>/update', views_keystore.KSUpdateView.as_view(), name='keystore-update'),
-    path('key-store/<int:pk>/delete', views_keystore.KSDeleteView.as_view(), name='keystore-delete'),
+    path('account/<int:pk>/update', views_account.AccountUpdateView.as_view(), name='account-update'),        
 
     path('budget', views_budget.BudgetListView.as_view(), name='budget-list'),
     path('budget/add', views_budget.BudgetCreateView.as_view(), name='budget-add'),

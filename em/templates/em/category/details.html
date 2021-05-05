@@ -6,13 +6,17 @@
 
 {% block content %}
 <div>
-    <div class="card">
-        <div class="card-header">
-            <div class="float-left"><h3><i class="{{ category.icon }}"></i> {{ category.name }}</h3></div>            
-            <a href="{% url 'em:category-delete' pk=category.pk %}" class="btn btn-danger btn-sm float-right ml-1">Delete</a> 
-            <a href="{% url 'em:category-update' pk=category.pk %}" class="btn btn-primary btn-sm float-right">Edit</a>     
-        </div>
+    <div class="card em-fg em-text">
+        
         <div class="card-body">
+            <div >
+                <div class="float-left card-title"><h3><i class="{{ category.icon }}"></i> {{ category.name }}</h3></div>            
+                <a href="{% url 'em:category-delete' pk=category.pk %}" class="btn btn-danger btn-sm float-right ml-1">Delete</a> 
+                <a href="{% url 'em:category-update' pk=category.pk %}" class="btn btn-primary btn-sm float-right">Edit</a>     
+            </div>
+            <br/>
+            <br/>            
+            <br/>
             <div class="em-text">
                 <span><strong>Name: </strong><i class="{{ category.icon }}"></i> {{ category.name }}</span><br/>                
                 <span><strong>Transactions: </strong>{{ category.transactions.count }}</span><br/>
@@ -22,8 +26,8 @@
                 {% endif %}
             </div>
             <br/>
-            
-            {% include "em/transactions_list_sub.html" %}            
+            <h3 class="card-title"><i class="{{ category.icon }}"></i> Transactions</h3>
+            {% include "em/transaction/list.html" %}            
                        
         </div>        
     </div>
