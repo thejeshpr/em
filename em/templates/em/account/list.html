@@ -13,7 +13,12 @@
                 <div class="card em-bg em-text mt-1">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-11 col-sm-11 col-xs-11">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                {% if account.account__act_type == 'credit' %}
+                                    <div class="float-right" style="background-color: red; width: 5px; height: 80px;"></div>
+                                {% else %}
+                                    <div class="float-right" style="background-color: green; width: 5px; height: 80px;"></div>
+                                {% endif %}
                                 <h4 class="card-title">
                                     <a href="{% url 'em:account-detail' account.account %}" class="em-text">
                                         #{{ account.account }} - <i class="{{ account.account__icon }}"></i>{{ account.account__name }} 
@@ -26,14 +31,7 @@
                                     Spendings: {{ account.spendings|floatformat|intcomma }}
                                 </span>
                             </div>                            
-                            <div class="col-md-1 col-sm-1 col-xs-1">
-                                {% if account.account__act_type == 'credit' %}
-                                    <div class="float-right" style="background-color: red; width: 5px; height: 80px;"></div>
-                                {% else %}
-                                    <div class="float-right" style="background-color: green; width: 5px; height: 80px;"></div>
-                                {% endif %}
-                            </div>
-                        </div>                                                
+                        </div>
                     </div>
                 </div>
             {% endfor %}

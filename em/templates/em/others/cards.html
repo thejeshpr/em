@@ -7,10 +7,10 @@
                 <div class="em-center-align">                    
                     <h1 class="card-title">{{ budget|floatformat|intcomma }}</h1>
                 </div>
-                <div class="progress" style="height: 1px;">                    
+                <!-- <div class="progress" style="height: 1px;">                    
                     <div class="progress-bar bg-info" role="progressbar" style="width: {% widthratio current_month_expense budget 100 %}%" aria-valuenow="{% widthratio current_month_expense budget 100 %}" aria-valuemin="0" aria-valuemax="100"></div>                    
-                </div>
-                <div class="em-center-align" style="color: gray;">Budget</div>
+                </div> -->
+                <div class="em-center-align em-secondary">Budget {% widthratio current_month_expense budget 100 %}%</div>                
             </div>
         </div>
     </div>
@@ -20,8 +20,9 @@
             <div class="card-body">
                 <div class="em-center-align">                    
                     <h1 class="card-title" style="color: red;">{{ current_month_expense|floatformat|intcomma }}</h1>
-                </div>                
-                <div class="em-center-align" style="color: gray;">Expense {% widthratio current_month_expense budget 100 %}%</div>
+                </div>                 
+                <div class="em-center-align" style="color: gray;">Expense {{ total_expense }}</div>
+                <!-- <div class="em-center-align" style="color: gray;">Expense {% widthratio current_month_expense budget 100 %}%</div> -->
             </div>
         </div>
         
