@@ -33,7 +33,7 @@ class AccountHelper(object):
     @staticmethod
     def get_filters(**kwargs):
         filters = dict()    
-        context = dict()
+        # context = dict()
         ref_month = kwargs.get('ref_month')
         dt = datetime.strptime(ref_month, AccountHelper.date_fmt) if ref_month else date.today()
 
@@ -43,27 +43,29 @@ class AccountHelper(object):
                 datetime.strptime(kwargs.get('to_dt'), AccountHelper.day_fmt)
             )
             filters.update(date__range = [from_dt, to_dt])
-            context['selected_range'] = f"{kwargs.get('from_dt')} - {kwargs.get('to_dt')}"
+            selected_range = f"{kwargs.get('from_dt')} - {kwargs.get('to_dt')}"
 
         else:
-            context['selected_range'] = datetime.strftime(dt, '%m-%Y')
+            selected_range = datetime.strftime(dt, '%m-%Y')
             filters = dict(
                 date__month=dt.month,
                 date__year=dt.year
             )
 
-        return filters
+        return filters, selected_range
         
     @staticmethod
     def get_account_details(context: Dict[Any, Any], **kwargs):        
         account: Account = context.get('account')     
         ref_month = kwargs.get('ref_month')
         dt = datetime.strptime(ref_month, AccountHelper.date_fmt) if ref_month else date.today()   
-        filters = AccountHelper.get_filters(**kwargs)
+        filters, selected_range = AccountHelper.get_filters(**kwargs)
+        context['selected_range'] = selected_range
         context['prev_month'] = dt - relativedelta.relativedelta(months=1)
         context['next_month'] = dt + relativedelta.relativedelta(months=1)
         context['cur_month'] = dt
         context['expenses'] = TransactionHelper.get_expenses(account=account, **filters)
+        print(context['expenses'])
         context['transactions'] = TransactionHelper.get_transactions(account=account, **filters)
         return context        
 

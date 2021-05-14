@@ -14,7 +14,7 @@
             <span class="em-secondary">Name: {{ account.name }}</span><br/>
             <span class="em-secondary">Type: {{ account.act_type }}</span><br/>
             <span class="em-secondary">Statement date: {{ account.statement_date }}</span><br/>
-            <span class="em-secondary">Total Amount: {% firstof spendings "0.0" %}</span><br/>
+            <span class="em-secondary">Total Amount: {% firstof expenses "0.0" %}</span><br/>
             <span class="em-secondary">Month: {{ cur_month|date:'m-Y' }}</span><br/>
             
             <hr/>
