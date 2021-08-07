@@ -32,10 +32,10 @@ class CategoryHelper(object):
         
         if ref_dt:
             ref_dt = datetime.strptime(ref_dt, CategoryHelper.date_fmt)
-            context['transactions'] = category.transactions.filter(date=ref_dt)
-            context['ttl_amt'] = category.transactions.filter(date=ref_dt).aggregate(ttl_amt=Sum('amount')).get('ttl_amt')            
+            context['transactions'] = category.transactions.filter(date=ref_dt).order_by("-date")
+            context['ttl_amt'] = category.transactions.filter(date=ref_dt).aggregate(ttl_amt=Sum('amount')).get('ttl_amt')
         else:
-            context['transactions'] = category.transactions.all()
+            context['transactions'] = category.transactions.all().order_by("-date")
             context['ttl_amt'] = category.transactions.all().aggregate(ttl_amt=Sum('amount')).get('ttl_amt')
         return context
 
