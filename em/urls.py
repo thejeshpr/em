@@ -40,4 +40,5 @@ urlpatterns = [
     path('json/<str:entity>', views_account.json_download, name="json-download"),
             
     path('chart/transactions', views.ChartTransaction.as_view(), name='chart-transactions'),
+    path('chart/accounts', views.ChartAccount.as_view(), name='chart-accounts'),
 ]

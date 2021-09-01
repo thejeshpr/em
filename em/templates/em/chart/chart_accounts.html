@@ -6,8 +6,8 @@
         <div class="card-body">
             <div class="card-title">
                 <h3>
-                    <i class="{{ account.icon }}"></i> Transaction ({{ crnt | date:"M Y" }})<br/>
-                    <span class="text-secondary">Total: <span class="em-amount">{{total_amt}}</span></span>
+                    <i class="{{ account.icon }}"></i> Accounts ({{ crnt | date:"M Y" }})<br/>
+                    <span class="text-secondary">Total: <span class="em-amount">{{ total_amt }}</span></span>
                 </h3>
                 <div class="float-right">
                     <a href="?ref_dt={{ prev.month }}-{{ prev.year }}">Prev</a> &nbsp;
@@ -16,15 +16,15 @@
                 <br>
                 <hr/>
                 {% include "em/others/chart_js.html" %}
-                <canvas class="em-fg" id="transactions_chart" width="400" height="400" style="background-color: #363636;"></canvas>
+                <canvas class="em-fg" id="accounts_chart" width="400" height="400" style="background-color: #363636;"></canvas>
                 <script>
-                    var ctx = document.getElementById('transactions_chart').getContext('2d');
+                    var ctx = document.getElementById('accounts_chart').getContext('2d');
                     var myChart = new Chart(ctx, {
                         type: 'bar',    
                         data: {
                             labels: {% autoescape off %} {{ labels }} {% endautoescape %},
                             datasets: [{
-                                label: 'Spendings by Date ',
+                                label: 'Spendings by Accounts ',
                                 data: {{ data }},
                                 // pointStyle: 'triangle',
                                 fill: true,            
@@ -84,4 +84,3 @@
 </div>
 
 {% endblock %}
-
