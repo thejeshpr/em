@@ -6,18 +6,22 @@
         <div class="card-body">
             <div class="card-title">
                 <h3>
-                    <i class="{{ account.icon }}"></i> Transaction Chart
+                    <i class="{{ account.icon }}"></i> Transaction Chart ({{ crnt | date:"M Y" }})
                 </h3>
+                <div class="float-right">
+                    <a href="?ref_dt={{ prev.month }}-{{ prev.year }}">Prev</a> &nbsp;
+                    <a href="?ref_dt={{ next.month }}-{{ next.year }}">Next</a>
+                </div>
                 {% include "em/others/chart_js.html" %}
                 <canvas class="em-fg" id="transactions_chart" width="400" height="400" style="background-color: #363636;"></canvas>
                 <script>
                     var ctx = document.getElementById('transactions_chart').getContext('2d');
                     var myChart = new Chart(ctx, {
-                        type: 'line',    
+                        type: 'bar',    
                         data: {
                             labels: {% autoescape off %} {{ labels }} {% endautoescape %},
                             datasets: [{
-                                label: 'Spendings by Date',
+                                label: 'Spendings by Date ',
                                 data: {{ data }},
                                 // pointStyle: 'triangle',
                                 fill: true,            
@@ -55,7 +59,7 @@
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Spendings by Date',
+                                    text: 'Spendings of Month {{ crnt | date:"M Y" }}',
                                     // color: 'rgba(153, 102, 255, 0.6)',
                                 }            
                             },

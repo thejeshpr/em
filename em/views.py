@@ -22,6 +22,8 @@ from .helper import Helper, CategoryHelper
 
 from pprint import pprint
 
+from calendar import monthrange
+
 
 
 from .models import (
@@ -169,19 +171,29 @@ class ChartTransaction(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)    
         res = { entry.get('date').strftime('%d-%b'):entry.get('spendings') for entry in context['tranactions'] }
-        labels, data = [], []
-
-        for i in reversed(range(Transaction.objects.count())):
-            dt = date.today() - relativedelta.relativedelta(days=i)
+        labels, data = [], []        
+        ref_dt_qp = self.request.GET.get('ref_dt')
+        ref_date = datetime.strptime(ref_dt_qp, "%m-%Y") if ref_dt_qp else date.today()
+        
+        for i in range(monthrange(ref_date.year, ref_date.month)[1]):
+            dt = ref_date + relativedelta.relativedelta(days=i)            
             key = dt.strftime('%d-%b')
             labels.append(key)
             data.append(res.get(key, 0))
         context['labels'] = labels
         context['data'] = data
 
-        # from pprint import pprint
-        # pprint(context)
+        # from pprint import pprint        
+        context['crnt'] = ref_date
+        context['prev'] = ref_date - relativedelta.relativedelta(months=1)
+        context['next'] = ref_date + relativedelta.relativedelta(months=1)
         return context
 
-    def get_queryset(self, **kwargs):        
-        return Transaction.objects.values('date').annotate(spendings=Sum('amount'))
+    def get_queryset(self, **kwargs): 
+        date_fmt = "%m-%Y"
+        # ref_month = self.request.GET.get('month') or date.today().month
+        ref_dt_qp = self.request.GET.get('ref_dt')
+        ref_dt = datetime.strptime(ref_dt_qp, date_fmt) if ref_dt_qp else date.today()
+        print(ref_dt)
+        self.count = Transaction.objects.values('date').filter(date__month=ref_dt.month, date__year=ref_dt.year).count()
+        return Transaction.objects.values('date').filter(date__month=ref_dt.month, date__year=ref_dt.year).annotate(spendings=Sum('amount'))
