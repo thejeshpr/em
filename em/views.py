@@ -186,7 +186,11 @@ class ChartTransaction(generic.ListView):
         # from pprint import pprint        
         context['crnt'] = ref_date
         context['prev'] = ref_date - relativedelta.relativedelta(months=1)
-        context['next'] = ref_date + relativedelta.relativedelta(months=1)
+        context['next'] = ref_date + relativedelta.relativedelta(months=1)         
+        context['total_amt'] = Transaction.objects.filter(
+                    date__month=ref_date.month,
+                    date__year=ref_date.year
+                ).aggregate(expense=Sum('amount')).get('expense') or 0
         return context
 
     def get_queryset(self, **kwargs): 
