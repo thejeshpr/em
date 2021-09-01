@@ -1,0 +1,76 @@
+{% extends 'em/base.html' %}
+
+{% block content %}
+<div>
+    <div class="card em-fg em-text">        
+        <div class="card-body">
+            <div class="card-title">
+                <h3>
+                    <i class="{{ account.icon }}"></i> Transaction Chart
+                </h3>
+                {% include "em/others/chart_js.html" %}
+                <canvas class="em-fg" id="transactions_chart" width="400" height="400" style="background-color: #363636;"></canvas>
+                <script>
+                    var ctx = document.getElementById('transactions_chart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'line',    
+                        data: {
+                            labels: {% autoescape off %} {{ labels }} {% endautoescape %},
+                            datasets: [{
+                                label: 'Spendings by Date',
+                                data: {{ data }},
+                                // pointStyle: 'triangle',
+                                fill: true,            
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.6)',
+                                    'rgba(54, 162, 235, 0.6)',
+                                    'rgba(255, 206, 86, 0.6)',
+                                    'rgba(75, 192, 192, 0.6)',
+                                    'rgba(153, 102, 255, 0.6)',
+                                    'rgba(123, 152, 235, 0.6)',
+                                    'rgba(103, 192, 205, 0.6)',
+                                    'rgba(255, 159, 64, 0.6)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(123, 152, 235, 1)',
+                                    'rgba(103, 192, 205, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 0.5
+                            }]
+                        },
+                        options: {
+                            responsive: true,     
+                            plugins: {
+                                legend: {
+                                    // position: 'bottom',
+                                    labels: {
+                                        // color: 'rgba(153, 102, 255, 0.6)',
+                                    }                
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Spendings by Date',
+                                    // color: 'rgba(153, 102, 255, 0.6)',
+                                }            
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                    </script>
+            </div>
+        </div>        
+    </div>
+</div>
+
+{% endblock %}
+

@@ -157,3 +157,31 @@ def dashboard(request):
 @login_required(login_url='/login/')
 def test(request):            
     return render(request, 'em/base_test.html')
+
+
+
+@method_decorator(login_required(login_url='/login/'), name='dispatch')
+class ChartTransaction(generic.ListView):
+    model = Transaction
+    context_object_name = "tranactions"
+    template_name = 'em/chart/chart_transactions.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)    
+        res = { entry.get('date').strftime('%d-%b'):entry.get('spendings') for entry in context['tranactions'] }
+        labels, data = [], []
+
+        for i in reversed(range(Transaction.objects.count())):
+            dt = date.today() - relativedelta.relativedelta(days=i)
+            key = dt.strftime('%d-%b')
+            labels.append(key)
+            data.append(res.get(key, 0))
+        context['labels'] = labels
+        context['data'] = data
+
+        # from pprint import pprint
+        # pprint(context)
+        return context
+
+    def get_queryset(self, **kwargs):        
+        return Transaction.objects.values('date').annotate(spendings=Sum('amount'))
