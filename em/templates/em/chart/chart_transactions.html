@@ -1,5 +1,7 @@
 {% extends 'em/base.html' %}
 
+{% load humanize %}
+
 {% block content %}
 <div>
     <div class="card em-fg em-text">        
@@ -7,7 +9,8 @@
             <div class="card-title">
                 <h3>
                     <i class="{{ account.icon }}"></i> Transaction ({{ crnt | date:"M Y" }})<br/>
-                    <span class="text-secondary">Total: <span class="em-amount">{{total_amt}}</span></span>
+                    <span class="text-secondary">Total: <span class="em-amount">{{total_amt|floatformat|intcomma}}</span></span><br/>
+                    <span class="text-secondary">Daily Avg: <span class="em-amount">{{avg|floatformat|intcomma}}</span></span>
                 </h3>
                 <div class="float-right">
                     <a href="?ref_dt={{ prev.month }}-{{ prev.year }}">Prev</a> &nbsp;

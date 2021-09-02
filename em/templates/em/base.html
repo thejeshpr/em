@@ -110,7 +110,14 @@
       </li>      
       <li class="nav-item">
         <a class="nav-link" href="{% url 'em:transaction-summary-month' %}">Spendings by Month</a>
-      </li>      
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Charts</a>
+        <div class="dropdown-menu" aria-labelledby="dropdown01">
+          <a class="dropdown-item" href="{% url 'em:chart-transactions' %}">Transactions</a>
+          <a class="dropdown-item" href="{% url 'em:chart-accounts' %}">Accounts</a>          
+        </div>
+      </li>
     </ul>    
   </div>
 </nav>

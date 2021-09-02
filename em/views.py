@@ -174,8 +174,10 @@ class ChartTransaction(generic.ListView):
         labels, data = [], []        
         ref_dt_qp = self.request.GET.get('ref_dt')
         ref_date = datetime.strptime(ref_dt_qp, "%m-%Y") if ref_dt_qp else date.today()
+        ref_date = datetime(ref_date.year, ref_date.month, 1)
+        no_of_days = monthrange(ref_date.year, ref_date.month)[1]
         
-        for i in range(monthrange(ref_date.year, ref_date.month)[1]):
+        for i in range(no_of_days):
             dt = ref_date + relativedelta.relativedelta(days=i)            
             key = dt.strftime('%d-%b')
             labels.append(key)
@@ -190,6 +192,7 @@ class ChartTransaction(generic.ListView):
                     date__month=ref_date.month,
                     date__year=ref_date.year
                 ).aggregate(expense=Sum('amount')).get('expense') or 0
+        context['avg'] = context['total_amt'] // no_of_days if context['total_amt'] else 0
         return context
 
     def get_queryset(self, **kwargs): 
